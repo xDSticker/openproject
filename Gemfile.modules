@@ -32,7 +32,7 @@ group :opf_plugins do
 	gem 'openproject-reporting',                 path: 'modules/reporting'
 	gem 'openproject-meeting',                   path: 'modules/meeting'
 	gem 'openproject-pdf_export',                path: 'modules/pdf_export'
-	gem "openproject-backlogs",                  path: 'modules/backlogs'
+	gem "openproject-backlogs",                  path: 'modules/backlogs',                  require: !(ENV['OPENPROJECT_EDITION'] == 'bim')
 	gem 'openproject-avatars',                   path: 'modules/avatars'
 	gem 'openproject-two_factor_authentication', path: 'modules/two_factor_authentication'
 	gem 'openproject-webhooks',                  path: 'modules/webhooks'
