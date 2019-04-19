@@ -37,11 +37,6 @@ describe UserMailer, type: :mailer do
     Setting.protocol = 'http'
     Setting.plain_text_mail = '0'
     Setting.default_language = 'en'
-
-    User.delete_all
-    WorkPackage.delete_all
-    Project.delete_all
-    ::Type.delete_all
   end
 
   it 'should test mail sends a simple greeting' do
@@ -345,8 +340,9 @@ describe UserMailer, type: :mailer do
     issue = FactoryBot.create(:work_package, due_date: Date.tomorrow, assigned_to: user, subject: 'some issue')
 
     DueIssuesReminder.new(42).remind_users
-    assert_equal 1, ActionMailer::Base.deliveries.size
-    mail = ActionMailer::Base.deliveries.last
+    user_mails = ActionMailer::Base.deliveries.select { |m| m.to.include? 'foo@bar.de' }
+    assert_equal 1, user_mails.size
+    mail = user_mails.first
     assert mail.to.include?('foo@bar.de')
     assert mail.body.encoded.include?("#{issue.project.name} - #{issue.type.name} ##{issue.id}: some issue")
     assert_equal '1 work package(s) due in the next 42 days', mail.subject

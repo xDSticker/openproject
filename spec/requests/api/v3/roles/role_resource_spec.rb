@@ -34,12 +34,9 @@ describe 'API v3 Role resource' do
   include API::V3::Utilities::PathHelper
 
   let(:current_user) { FactoryBot.create(:user) }
-  let(:role) { FactoryBot.create(:role) }
+  let!(:role) { FactoryBot.create(:role) }
 
   before do
-    # Avoid having a builtin role left over from another spec
-    Role.delete_all
-
     allow(User).to receive(:current).and_return current_user
   end
 
@@ -48,17 +45,11 @@ describe 'API v3 Role resource' do
     let(:response) { last_response }
 
     before do
-      role
-
       get get_path
     end
 
-    it 'succeeds' do
-      expect(last_response.status)
-        .to eql(200)
-    end
-
-    it_behaves_like 'API V3 collection response', 1, 1, 'Role'
+    counter = ->(*) { Role.count }
+    it_behaves_like 'API V3 collection response', counter, counter, 'Role'
   end
 
   describe '#get /roles/:id' do

@@ -29,17 +29,13 @@
 require 'spec_helper'
 
 describe ProjectsController, type: :controller do
-  before do
-    Role.delete_all
-    User.delete_all
-  end
+  using_shared_fixtures :admin
 
   before do
     allow(@controller).to receive(:set_localization)
 
     @role = FactoryBot.create(:non_member)
-    @user = FactoryBot.create(:admin)
-    allow(User).to receive(:current).and_return @user
+    allow(User).to receive(:current).and_return admin
 
     @params = {}
   end
