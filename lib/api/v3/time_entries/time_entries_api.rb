@@ -69,12 +69,8 @@ module API
             end
           end
 
-          params do
-            requires :id, desc: 'Time entry\'s id'
-          end
-
-          route_param :id do
-            before do
+          route_param :id, type: Integer, desc: 'Time entry ID' do
+            after_validation do
               @time_entry = TimeEntry
                             .visible
                             .find(params[:id])

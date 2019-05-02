@@ -74,7 +74,7 @@ module API
           mount CreateFormAPI
           mount ::API::V3::Grids::Schemas::GridSchemaAPI
 
-          route_param :id do
+          route_param :id, type: Integer, desc: 'Grid ID' do
             helpers do
               def raise_if_lacking_manage_permission
                 unless ::Grids::UpdateContract.new(@grid, current_user).edit_allowed?

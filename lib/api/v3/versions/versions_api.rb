@@ -42,8 +42,8 @@ module API
                                                                     params)
           end
 
-          route_param :id do
-            before do
+          route_param :id, type: Integer, desc: 'Version ID' do
+            after_validation do
               @version = Version.find(params[:id])
 
               authorized_for_version?(@version)
