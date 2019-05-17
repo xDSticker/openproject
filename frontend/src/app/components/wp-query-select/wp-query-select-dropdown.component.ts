@@ -419,20 +419,24 @@ export class WorkPackageQuerySelectDropdownComponent implements OnInit, OnDestro
     const currentId = _.toString(this.$state.params.query_id);
     let opts = {reload: false};
 
-    const isStaticItem = !!item.identifier;
     const isSameItem = params.query_id && params.query_id === currentId.toString();
-
 
     // Ensure we're reloading the query
     if (isSameItem) {
       opts.reload = true;
     }
 
-    this.$state.go(
-      'work-packages.list',
-      params,
-      opts
-    );
+    // When in angular context, just switch states.
+    // Otherwise a hard page refresh is necessary.
+    if (this.$state.current.name) {
+      this.$state.go(
+        'work-packages.list',
+        params,
+        opts
+      );
+    } else {
+      window.open(this.buildQueryItemUrl(item), '_self')
+    }
 
     this.toggleService.closeWhenOnMobile();
   }
