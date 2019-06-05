@@ -17,7 +17,9 @@ export class WidgetWpAssignedComponent extends WidgetWpListComponent implements 
     filters.add('assignee', '=', ["me"]);
     filters.add('status', 'o', []);
 
-    this.queryProps = {"columns[]":["id", "project", "type", "subject"],
+    this.queryProps = {"columns[]":["id", "project", "type", "subject", "priority"],
+      "showHierarchies": "false",
+      "sortBy": JSON.stringify([['priority', 'desc']]),
       "filters":filters.toJson()};
   }
 }
