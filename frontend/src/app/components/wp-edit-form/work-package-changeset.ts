@@ -82,9 +82,20 @@ export class WorkPackageChangeset {
     return this.changes[attribute];
   }
 
+
   public clear() {
     this.changes = {};
     this.resetForm();
+  }
+
+  /**
+   * Remove some of the changes by key
+   * @param changes
+   */
+  public clearSome(...changes:string[]) {
+    changes.forEach((key) => {
+      delete this.changes[key];
+    });
   }
 
   public resetForm() {
@@ -156,6 +167,8 @@ export class WorkPackageChangeset {
         .update(payload)
         .then((form:FormResource) => {
           this.form = form;
+
+          this.rebuildDefaults(form.payload);
 
           this.buildResource();
 
@@ -229,6 +242,21 @@ export class WorkPackageChangeset {
       .catch(() => this.inFlight = false);
 
     return promise;
+  }
+
+  /**
+   * Rebuild default attributes we know might change
+   * Will only apply for new work packages.
+   */
+  private rebuildDefaults(payload:HalResource) {
+    if (!this.workPackage.isNew) {
+      return;
+    }
+
+    // Take over the description from the form
+    // Either it's the same as our changeset or it was set by
+    // a default type value.
+    this.setValue('description', payload.description);
   }
 
   /**
@@ -344,6 +372,22 @@ export class WorkPackageChangeset {
     return (this.form || this.workPackage).schema;
   }
 
+  /**
+   * Check whether the given attribute is writable.
+   * @param attribute
+   */
+  public isWritable(attribute:string):boolean {
+    const schemaName = this.getSchemaName(attribute);
+    const fieldSchema = this.schema[schemaName] as IFieldSchema;
+    return fieldSchema && fieldSchema.writable;
+  }
+
+  public humanName(attribute:string):string {
+    const fieldSchema = this.schema[attribute] as IFieldSchema;
+    return fieldSchema.name || attribute;
+  }
+
+
   public getSchemaName(attribute:string):string {
     if (this.schema.hasOwnProperty('date') && (attribute === 'startDate' || attribute === 'dueDate')) {
       return 'date';
@@ -359,7 +403,7 @@ export class WorkPackageChangeset {
       return;
     }
 
-    let payload:any = this.workPackage.$source;
+    let payload:any = { ... this.workPackage.$source };
 
     const resource = this.halResourceService.createHalResourceOfType('WorkPackage', this.mergeWithPayload(payload));
 

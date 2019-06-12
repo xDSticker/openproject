@@ -122,6 +122,9 @@ ca:
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -434,6 +437,7 @@ ca:
         spent_on: Data
         type: Tipus
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -606,6 +610,10 @@ ca:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: no és un directori.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Treball paquet #%{id} no és un
             objectiu vàlid per a reassignar les entrades de temps.'
@@ -668,7 +676,15 @@ ca:
               error_not_found: not found
         member:
           principal_blank: Trieu com a mínim un usuari o grup.
-          role_blank: Seleccioneu almenys un rol.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Si us plau, revisi els camps següents:'
         header:
@@ -849,6 +865,7 @@ ca:
       Se li comunicarà per correu electrònic tan aviat com "%{target_project_name}"
       estigui disponible.
     failed: No es pot copiar el projecte %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Projecte %{target_project_name} creat
     errors: Error
     project_custom_fields: Custom fields on project
@@ -1017,7 +1034,7 @@ ca:
   description_choose_project: Projectes
   description_compare_from: Compare from
   description_compare_to: Compare to
-  description_current_position: 'Sou aquí:'
+  description_current_position: 'You are here: '
   description_date_from: Introduir data d'inici
   description_date_range_interval: Escollir un rang seleccionat de dates d'inici i
     fi
@@ -1072,11 +1089,11 @@ ca:
     les cookies estan habilitades, ja que aquesta aplicació no pot funcionar correctament
     sense.
   error_custom_option_not_found: Option does not exist.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1461,6 +1478,7 @@ ca:
   label_max_size: Mida màxima
   label_me: jo mateix
   label_member_new: Nou membre
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Membres
   label_view_all_members: Veure tots els membres
   label_menu_item_name: Nom de l'element de menú
@@ -1489,6 +1507,7 @@ ca:
   label_my_queries: Les meves consultes personalitzades
   label_never: Mai
   label_new: Nou
+  label_new_features: New features
   label_new_statuses_allowed: Nous estats permesos
   label_news_added: Notícies afegides
   label_news_comment_added: S'ha afegit un comentari a la notícia
@@ -1933,7 +1952,6 @@ ca:
     Afini la cerca escrivint el nom del nou membre (o grup).
   notice_unable_delete_time_entry: No s'ha pogut suprimir l'entrada del registre de
     temps.
-  notice_unable_delete_version: No s'ha pogut suprimir la versió.
   notice_user_missing_authentication_method: L'usuari encara ha de triar una contrassenya
     o una altra manera d'iniciar la sessió.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1981,6 +1999,7 @@ ca:
   permission_add_project: Crear un projecte
   permission_add_subprojects: Crear subprojectes
   permission_add_work_package_watchers: Afegir observadors
+  permission_assign_versions: Assign versions
   permission_browse_repository: Accés de només lectura al repositori (navegar i checkout)
   permission_change_wiki_parent_page: Canviar la pàgina de pare de la wiki
   permission_comment_news: Comentar noticies
@@ -2819,12 +2838,9 @@ ca:
   menu_item: Element de menú
   menu_item_setting: Visibilitat
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Element de menú per a la pàgina wiki "%{title}"
   wiki_menu_item_setting: Visibilitat
   wiki_menu_item_new_main_item_explanation: 'Esteu Suprimint l''únic l''element de
@@ -2849,6 +2865,7 @@ ca:
     attributes:
       lock_version: Bloquejar versió
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Cal que esteu autenticat per accedir a aquest recurs.
       code_401_wrong_credentials: No heu proporcionat les credencials correctes.
       code_403: No està autoritzat a accedir a aquest recurs.
@@ -2876,6 +2893,8 @@ ca:
         que s'esperava.
       multiple_errors: Diverses restriccions de camp han estat violades.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: El context proporcionat no és un enllaç a un recurs.
         unsupported_context: El recurs proporcionat no s'admet com a context.

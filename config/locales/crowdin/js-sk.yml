@@ -19,12 +19,6 @@ sk:
     close_popup_title: Zavrieť okno
     close_filter_title: Zavrieť filter
     close_form_title: Zavrieť formulár
-    boards:
-      upsale:
-        boards: Need to freely structure your work in a board view?
-        check_out_link: Pozrite si verziu Enterprise.
-      lists:
-        delete: Vymazať zoznam
     card:
       add_new: Pridať novú kartu
       highlighting:
@@ -73,7 +67,7 @@ sk:
       too_many: Existuje viac pracovných balíčkov (%{count}), než je možné zobraziť
         v kalendári (%{max}). Pridaním filtrov sa zamerajte na tie relevantné.
     description_available_columns: Dostupné stĺpce
-    description_current_position: 'Nachádzate sa tu:'
+    description_current_position: 'You are here: '
     description_select_work_package: 'Vyberte pracovný balík #%{id}'
     description_selected_columns: Vybraté stĺpce
     description_subwork_package: 'Podradený pracovný balík #%{id}'
@@ -188,6 +182,17 @@ sk:
           title: Pracovné balíčky
         work_packages_calendar:
           title: Kalendár
+    homescreen:
+      blocks:
+        new_features:
+          text_new_features: Read about new features and product updates.
+          current_new_feature_html: 'OpenProject contains a new <b>Boards view</b>
+            for Agile project management. </br> To activate this new feature for your
+            existing projects, please do the following steps: <ul><li>Activate the
+            module Boards within existing projects'' settings.</li> <li>Configure
+            your Boards in a project.</li> <li>Verify roles and permissions</li></ul>'
+          image_alt_text: Board teaser image
+          learn_about: Learn more about Agile Boards
     label_activate: Aktivovať
     label_activity_no: Záznam aktivity číslo %{activityNo}
     label_activity_with_comment_no: Záznam aktivity číslo %{activityNo} (obsahuje
@@ -213,6 +218,7 @@ sk:
     label_board_locked: Uzamknuté
     label_board_plural: Nástenky
     label_board_sticky: Dôležité (vždy vyššie)
+    label_create: Vytvoriť
     label_create_work_package: Vytvoriť nový pracovný balíček
     label_created_by: Vytvoril(a)
     label_date: Dátum
@@ -414,8 +420,11 @@ sk:
       selection: Prosím, vyberte
       relation_description: Kliknutím pridáte popis tohto vzťahu
     project:
-      required_outside_context: Nie ste v kontexte projektu. Prosím vyberte najskôr
-        kontext projektu aby ste mohli vybrať typ a stav
+      required_outside_context: 'Please choose a project to create the work package
+        in to see all attributes. You can only select projects which have the type
+        above activated.
+
+'
       context: Kontext projektu
       work_package_belongs_to: Tento pracovný balíček patrí k projektu %{projectname}.
       click_to_switch_context: Otvoriť tento pracovný balík v danom projekte.
@@ -505,9 +514,8 @@ sk:
       save: Uložiť vzťah
       abort: Zrušiť
     relations_autocomplete:
-      placeholder: Zadajte ID pracovného balíčku
-      parent_placeholder: Vyberte nadradený prvok, enter zruší závislosť, escape vráti
-        predchádzajúci stav.
+      placeholder: Type to search
+      parent_placeholder: Choose new parent or press escape to cancel.
     repositories:
       select_tag: Vybrať značku
       select_branch: Vyberte odbor

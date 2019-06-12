@@ -95,13 +95,18 @@ zh:
     single: 或
   deprecations:
     old_timeline:
-      replacement: 此时间线模块已由嵌入工作包模块中的交互式时间线模块取代。
-      removal: 此模块在 OpenProject 8.0 中将移除。此视图的配置将不会迁移到工作包视图中。
-      further_information_before: 请查看
-      link_name: 如何将迁移到新时间线。
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: '请注意: 这个模块将与OpenProject 8.0一起移除。'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: 维基
@@ -372,6 +377,7 @@ zh:
         spent_on: 日期
         type: 类型
       type:
+        description: 默认描述文本
         attribute_groups: ''
         is_in_roadmap: 默认在版本蓝图中显示
         is_default: 默认激活新项目
@@ -538,6 +544,9 @@ zh:
           invalid_url: 不是有效的存储库 URL 或路径。
           must_not_be_ssh: 不能是 SSH url。
           no_directory: 不是一个目录。
+        role:
+          permissions:
+            dependency_missing: 还需要包括“%{dependency}”，因为已选择“%{permission}”。
         work_package:
           is_not_a_valid_target_for_time_entries: '工作包 #%{id} 不是重新分配时间条目的有效目标。'
           attributes:
@@ -565,7 +574,7 @@ zh:
           attributes:
             attribute_groups:
               attribute_unknown: 已使用无效的工作包属性。
-              attribute_unknown_name: 'Invalid work package attribute used: %{attribute}'
+              attribute_unknown_name: 使用了无效的工作包属性：%{attribute}
               duplicate_group: 组名 %{group} 已多次使用。组名不能重复。
               query_invalid: '嵌入式查询 "%{group}" 无效: %{details}'
               group_without_name: 不允许未命名的群组。
@@ -590,7 +599,14 @@ zh:
               error_not_found: 未找到
         member:
           principal_blank: 请选择至少一个用户或组。
-          role_blank: 请选择至少一个角色。
+          role_blank: 需要进行分配。
+          attributes:
+            roles:
+              ungrantable: 具有不可分配的角色。
+            principal:
+              unassignable: 无法分配至项目。
+        version:
+          undeletable_work_packages_attached: 无法删除该版本，因为它连接了工作包。
       template:
         body: 请检查以下字段：
         header:
@@ -764,6 +780,7 @@ zh:
   copy_project:
     started: 开始将项目“%{source_project_name}”复制到“%{target_project_name}“。“%{target_project_name}”可用后您将会立即收到电子邮件通知。
     failed: 无法复制项目 %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: 创建的项目 %{target_project_name}
     errors: 错误
     project_custom_fields: 项目上的自定义字段
@@ -927,7 +944,7 @@ zh:
   description_choose_project: 项目
   description_compare_from: 比较开始于
   description_compare_to: 比较截止于
-  description_current_position: 你在这里：
+  description_current_position: 您现在的位置：
   description_date_from: 输入开始日期
   description_date_range_interval: 通过选择开始日期和结束日期来选择范围
   description_date_range_list: 从列表中选择范围
@@ -977,9 +994,9 @@ zh:
   error_code: 错误 %{code}
   error_cookie_missing: OpenProject cookie 丢失。请确保已启用 cookie，因为如果不启用，此应用程序将无法正常运行。
   error_custom_option_not_found: 选项不存在。
-  error_dependent_work_package: '相关工作包中的错误%{related_id} %{related_subject}: %{error}'
   error_enterprise_activation_user_limit: 无法激活您的帐户 (已达到用户限制)。请与管理员联系以获取访问权限。
   error_failed_to_delete_entry: 无法删除此条目。
+  error_in_dependent: '尝试更改依赖对象时出错：%{dependent_class} #%{related_id} - %{related_subject}：%{error}'
   error_invalid_selected_value: 选中的值无效。
   error_invalid_group_by: 无法按照 %{value} 分组
   error_invalid_query_column: 无效的查询列：%{value}
@@ -1339,6 +1356,7 @@ zh:
   label_max_size: 最大
   label_me: 我
   label_member_new: 新成员
+  label_member_all_admin: "（所有角色都由管理员状态决定）"
   label_member_plural: 成员
   label_view_all_members: 查看所有成员
   label_menu_item_name: 菜单项名称
@@ -1367,6 +1385,7 @@ zh:
   label_my_queries: 我的自定义查询
   label_never: 永不
   label_new: 新增
+  label_new_features: 新功能
   label_new_statuses_allowed: 允许的新状态
   label_news_added: 添加新闻
   label_news_comment_added: 评论添加到新闻
@@ -1766,7 +1785,6 @@ zh:
   notice_successful_update: 成功更新。
   notice_to_many_principals_to_display: 有太多结果。\n键入新成员（或组）缩小搜索。
   notice_unable_delete_time_entry: 不能删除时间记录条目。
-  notice_unable_delete_version: 不能删除版本。
   notice_user_missing_authentication_method: 用户尚未选择密码或另一种方式登录。
   notice_user_invitation_resent: 邀请已发送到 %{email}。
   present_access_key_value: '你的 %{key_name} 是: %{value}'
@@ -1809,6 +1827,7 @@ zh:
   permission_add_project: 创建项目
   permission_add_subprojects: 创建子项目
   permission_add_work_package_watchers: 添加关注人
+  permission_assign_versions: 分配版本
   permission_browse_repository: 只读访问存储库 (浏览和签出)
   permission_change_wiki_parent_page: 更改父 wiki 页面
   permission_comment_news: 评论新闻
@@ -2489,10 +2508,9 @@ zh:
   menu_item: 菜单项
   menu_item_setting: 可见性
   mysql_deprecation:
-    notice: 'OpenProject 的未来版本可能会放弃或减少对 MySQL 和 MariaDB 数据库的支持。您的安装仍在 MySQL 上运行，我们建议您将安装迁移到
-      PostgreSQL。 按照我们的迁移指南操作可以轻松完成此过程：
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: wiki页面” %{title} “的菜单项
   wiki_menu_item_setting: 可见性
   wiki_menu_item_new_main_item_explanation: '您正在删除唯一的主wiki菜单项。您现在需要选择一个wiki页面生成新的主项目。若要删除wiki，wiki模块可以由管理员停用。
@@ -2512,6 +2530,7 @@ zh:
     attributes:
       lock_version: 锁版
     errors:
+      code_400: 错误的请求：%{message}
       code_401: 你需要被授权访问该资源。
       code_401_wrong_credentials: 你没有提供正确的凭据。
       code_403: 您无权访问此资源。
@@ -2533,6 +2552,7 @@ zh:
       multipart_body_error: 请求正文中不包含所需要的多段部分。
       multiple_errors: 违反了多个字段的约束。
       unable_to_create_attachment: 无法创建附件
+      unable_to_create_attachment_permissions: 由于缺少文件系统权限，无法保存附件
       render:
         context_not_parsable: 所提供的上下文环境并不是指向资源的链接。
         unsupported_context: 所提供的资源不被上下文环境所支持。

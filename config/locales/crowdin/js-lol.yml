@@ -17,12 +17,6 @@ lol:
     close_popup_title: crwdns127042:0crwdne127042:0
     close_filter_title: crwdns127044:0crwdne127044:0
     close_form_title: crwdns127046:0crwdne127046:0
-    boards:
-      upsale:
-        boards: crwdns127048:0crwdne127048:0
-        check_out_link: crwdns127050:0crwdne127050:0
-      lists:
-        delete: crwdns129686:0crwdne129686:0
     card:
       add_new: crwdns127052:0crwdne127052:0
       highlighting:
@@ -69,7 +63,7 @@ lol:
       title: crwdns127130:0crwdne127130:0
       too_many: crwdns127132:0%{count}crwdnd127132:0%{max}crwdne127132:0
     description_available_columns: crwdns127134:0crwdne127134:0
-    description_current_position: crwdns127136:0crwdne127136:0
+    description_current_position: crwdns129854:0crwdne129854:0
     description_select_work_package: crwdns127138:0%{id}crwdne127138:0
     description_selected_columns: crwdns127140:0crwdne127140:0
     description_subwork_package: crwdns127142:0%{id}crwdne127142:0
@@ -177,6 +171,13 @@ lol:
           title: crwdns129682:0crwdne129682:0
         work_packages_calendar:
           title: crwdns127280:0crwdne127280:0
+    homescreen:
+      blocks:
+        new_features:
+          text_new_features: crwdns129930:0crwdne129930:0
+          current_new_feature_html: crwdns129932:0crwdne129932:0
+          image_alt_text: crwdns129934:0crwdne129934:0
+          learn_about: crwdns129936:0crwdne129936:0
     label_activate: crwdns127282:0crwdne127282:0
     label_activity_no: crwdns127284:0%{activityNo}crwdne127284:0
     label_activity_with_comment_no: crwdns127286:0%{activityNo}crwdne127286:0
@@ -201,6 +202,7 @@ lol:
     label_board_locked: crwdns127324:0crwdne127324:0
     label_board_plural: crwdns127326:0crwdne127326:0
     label_board_sticky: crwdns127328:0crwdne127328:0
+    label_create: crwdns129938:0crwdne129938:0
     label_create_work_package: crwdns127330:0crwdne127330:0
     label_created_by: crwdns127332:0crwdne127332:0
     label_date: crwdns127334:0crwdne127334:0
@@ -372,7 +374,9 @@ lol:
       selection: crwdns127634:0crwdne127634:0
       relation_description: crwdns127636:0crwdne127636:0
     project:
-      required_outside_context: crwdns127638:0crwdne127638:0
+      required_outside_context: 'crwdns129940:0crwdne129940:0
+
+'
       context: crwdns127640:0crwdne127640:0
       work_package_belongs_to: crwdns127642:0%{projectname}crwdne127642:0
       click_to_switch_context: crwdns127644:0crwdne127644:0
@@ -457,8 +461,8 @@ lol:
       save: crwdns127780:0crwdne127780:0
       abort: crwdns127782:0crwdne127782:0
     relations_autocomplete:
-      placeholder: crwdns127784:0crwdne127784:0
-      parent_placeholder: crwdns127786:0crwdne127786:0
+      placeholder: crwdns129942:0crwdne129942:0
+      parent_placeholder: crwdns129866:0crwdne129866:0
     repositories:
       select_tag: crwdns127788:0crwdne127788:0
       select_branch: crwdns127790:0crwdne127790:0

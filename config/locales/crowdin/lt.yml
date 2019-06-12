@@ -113,16 +113,18 @@ lt:
     single: arba
   deprecations:
     old_timeline:
-      replacement: Šis laiko juostos modulis buvo pakeistas nauju, kuris integruotas
-        į darbų paketų modulį.
-      removal: Šis modulis bus pašalintas iš OpenProject 8.0. Šis konfigūracijos atvaizdavimas
-        nebus perkeltas į darbų paketų peržiūros langą.
-      further_information_before: Prašome peržiūrėti
-      link_name: kaip pereiti prie naujos laiko juostos.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Prašome atkreipti dėmesį: šis modulis bus pašalintas iš OpenProject
-        8.0.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -425,6 +427,7 @@ lt:
         spent_on: Data
         type: Tipas
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -597,6 +600,10 @@ lt:
           invalid_url: nėra tinkamas repozitorijos URL ar kelias.
           must_not_be_ssh: neturi būti SSH URL.
           no_directory: nėra aplankas.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Darbų paketas #%{id} nėra tinkamas
             laiko įrašų perskirstymo pasirinkimas.'
@@ -663,7 +670,15 @@ lt:
               error_not_found: nerasta
         member:
           principal_blank: Prašome pasirinkti bent vieną vartotoją ar grupę.
-          role_blank: Prašome pasirinkti bent vieną rolę.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Prašome patikrinti šiuos laukelius:'
         header:
@@ -848,6 +863,7 @@ lt:
     started: Pradėtas kopijuoti „%{source_project_name}“ projektas į „%{target_project_name}“.
       Jums bus pranešta laišku, kai tik „%{target_project_name}“ projektas taps pasiekiamas.
     failed: Negalima kopijuoti „%{source_project_name}“ projekto
+    failed_internal: Copying failed due to an internal error.
     succeeded: Sukurtas projektas pavadinimu „%{target_project_name}“
     errors: Klaida
     project_custom_fields: Vartotojo laukai projektui
@@ -1039,7 +1055,7 @@ lt:
   description_choose_project: Projektai
   description_compare_from: Palyginti nuo
   description_compare_to: Palyginti iki
-  description_current_position: 'Jūs esate čia:'
+  description_current_position: 'You are here: '
   description_date_from: Įveskite pradžios datą
   description_date_range_interval: Pasirinkite diapazoną nurodydami pradžios ir pabaigos
     datas
@@ -1096,11 +1112,11 @@ lt:
   error_cookie_missing: OpenProject sausainėlis nerastas. Prašome patikrinti, ar sausainėliai
     yra įgalinti, nes kitaip aplikacija tinkamai neveiks.
   error_custom_option_not_found: Galimybė neegzistuoja.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Jūsų paskyra negali būti aktyvuota (pasiektas
     vartotojų limitas). Prašome kreiptis į savo sistemos administratorių.
   error_failed_to_delete_entry: Šio įrašo nepavyko panaikinti.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Negalima grupuoti naudojant: %{value}'
   error_invalid_query_column: 'Netinkamas užklausos stulpelis: %{value}'
@@ -1480,6 +1496,7 @@ lt:
   label_max_size: Maksimalus dydis
   label_me: aš
   label_member_new: Naujas narys
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Nariai
   label_view_all_members: Rodyti visus narius
   label_menu_item_name: Meniu punkto pavadinimas
@@ -1508,6 +1525,7 @@ lt:
   label_my_queries: Mano sukurtos užklausos
   label_never: Niekada
   label_new: Naujas
+  label_new_features: New features
   label_new_statuses_allowed: Naujos galimos būsenos
   label_news_added: Pridėta naujiena
   label_news_comment_added: Prie naujienos pridėtas komentaras
@@ -1957,7 +1975,6 @@ lt:
   notice_to_many_principals_to_display: Per daug rezultatų. Susiaurinkite paiešką
     pradėdami įvesti naujo nario (ar grupės) pavadinimą.
   notice_unable_delete_time_entry: Neįmano ištrinti laiko žurnalo įrašo.
-  notice_unable_delete_version: Neįmanoma ištrinti versijos.
   notice_user_missing_authentication_method: Vartotojas dar nepasirinko slaptažodžio
     ar kitokio būdo prisijungimui.
   notice_user_invitation_resent: Pakvietimas buvo nusiųstas į %{email}.
@@ -2007,6 +2024,7 @@ lt:
   permission_add_project: Sukurti projektą
   permission_add_subprojects: Sukurti sub-projektus
   permission_add_work_package_watchers: Pridėti stebėtojus
+  permission_assign_versions: Assign versions
   permission_browse_repository: Tik skaityti prieiga prie repozitorijos (naršyti ir
     pasiimti)
   permission_change_wiki_parent_page: Pakeisti tėvinį wiki puslapį
@@ -2837,12 +2855,9 @@ lt:
   menu_item: Meniu punktas
   menu_item_setting: Matomumas
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Meniu punktas wiki puslapiui „%{title}“
   wiki_menu_item_setting: Matomumas
   wiki_menu_item_new_main_item_explanation: 'Jūs ketinate šalinti tik pagrindinį wiki
@@ -2867,6 +2882,7 @@ lt:
     attributes:
       lock_version: Užrakto versija
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Jums reikia būti autentifikuotam, kad galėtumėte pasiekti šį resursą.
       code_401_wrong_credentials: Jūs nepateikėte teisingų prisijungimo duomenų.
       code_403: Jūs nesate autorizuotas šiam resursui pasiekti.
@@ -2893,6 +2909,8 @@ lt:
       multipart_body_error: Užklausos turinys neturi laukiamų dalių.
       multiple_errors: Buvo pažeista daug laukelio apribojimų.
       unable_to_create_attachment: Nepavyko sukurti priedo
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: Duotas kontekstas nėra nuoroda į resursą.
         unsupported_context: Duotas resursas nėra palaikomas kaip kontekstas.

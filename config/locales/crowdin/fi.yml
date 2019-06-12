@@ -112,8 +112,8 @@ fi:
     single: or
   deprecations:
     old_timeline:
-      replacement: Tämä aikajana-moduuli tullaan korvaamaan työpaketti-moduuliin upotettavalla
-        interaktiivisella aikajanalla.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
       removal: This module is going to be removed with OpenProject 8.0. The configuration
         for this view will NOT be migrated to the work package view.
       further_information_before: Please take a look at
@@ -121,6 +121,9 @@ fi:
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -424,6 +427,7 @@ fi:
         spent_on: Päivä
         type: Tyyppi
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -597,6 +601,10 @@ fi:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: ei ole hakemisto.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Työpaketti #%{id} ei ole kelvollinen
             uusi kohde aikakirjauksille.'
@@ -659,7 +667,15 @@ fi:
               error_not_found: ei löydetty
         member:
           principal_blank: Valitse vähintään yksi käyttäjä tai ryhmä.
-          role_blank: Valitse vähintään yksi rooli.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Tarkista seuraavat kentät:'
         header:
@@ -838,6 +854,7 @@ fi:
     started: Projektin "%{source_project_name}" kopiointi uudeksi projektiksi "%{target_project_name}"
       alkoi. Sinulle ilmoitetaan sähköpostitse, kun "%{target_project_name}" on saatavilla.
     failed: Ei voi kopioida projektia %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Projekti %{target_project_name} luotu
     errors: Virhe
     project_custom_fields: Custom fields on project
@@ -1004,7 +1021,7 @@ fi:
   description_choose_project: Projektit
   description_compare_from: Verrattuna
   description_compare_to: Verrattuna
-  description_current_position: 'Olet täällä:'
+  description_current_position: 'You are here: '
   description_date_from: Syötä aloituspäivämäärä
   description_date_range_interval: Valitse alkamis- ja päättymispäivämäärä
   description_date_range_list: Valitse alue luettelosta
@@ -1057,11 +1074,11 @@ fi:
   error_cookie_missing: OpenProject evästeen puuttuu. Varmista, että evästeet ovat
     käytössä, koska tämä sovellus ei toimi oikein ilman evästeitä.
   error_custom_option_not_found: Vaihtoehtoa ei ole olemassa.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Tämän merkinnän poisto ei onnistunut.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1443,6 +1460,7 @@ fi:
   label_max_size: Suurin koko
   label_me: minä
   label_member_new: Uusi jäsen
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Jäsenet
   label_view_all_members: Näytä kaikki jäsenet
   label_menu_item_name: Valinnan nimi
@@ -1471,6 +1489,7 @@ fi:
   label_my_queries: Omat hakuni
   label_never: Never
   label_new: Uusi
+  label_new_features: New features
   label_new_statuses_allowed: Uudet tilat sallittu
   label_news_added: Uutinen lisätty
   label_news_comment_added: Kommentti lisätty uutiseen
@@ -1898,7 +1917,6 @@ fi:
     On liian paljon tuloksia.
     Rajata hakua kirjoittamalla nimi uuden jäsenen (tai ryhmä).
   notice_unable_delete_time_entry: Ei voi poistaa aikakirjausta.
-  notice_unable_delete_version: Version poisto epäonnistui
   notice_user_missing_authentication_method: Käyttäjä on vielä valita salasana tai
     toinen tapa kirjautua sisään.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1946,6 +1964,7 @@ fi:
   permission_add_project: Luo projekti
   permission_add_subprojects: Luoda aliprojekteja
   permission_add_work_package_watchers: Lisää seuraajia
+  permission_assign_versions: Assign versions
   permission_browse_repository: Selaa tietovarastoa
   permission_change_wiki_parent_page: Vaihda ylätason wikisivu
   permission_comment_news: Kommentoi uutisia
@@ -2748,12 +2767,9 @@ fi:
   menu_item: Menu item
   menu_item_setting: Visibility
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Menu item for wikipage "%{title}"
   wiki_menu_item_setting: Visibility
   wiki_menu_item_new_main_item_explanation: 'Sinä olet poistat vain tärkeimmät wiki
@@ -2776,6 +2792,7 @@ fi:
     attributes:
       lock_version: Lock Version
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Sinun täytyy olla todennettu pääsy tähän resurssiin.
       code_401_wrong_credentials: Et ole antanut oikeita käyttäjätietoja.
       code_403: Sinulla ei ole oikeutta käyttää tätä resurssia.
@@ -2802,6 +2819,8 @@ fi:
       multipart_body_error: Pyynnön elin ei sisällä odotettavissa moniosaisia osat.
       multiple_errors: Useita kenttä rajoituksia on rikottu.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: Yhteydessä edellyttäen ei ole linkki resurssi.
         unsupported_context: Resurssi koska ei ole tuettu yhteydessä.

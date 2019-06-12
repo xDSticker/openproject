@@ -18,12 +18,6 @@ vi:
     close_popup_title: Đóng
     close_filter_title: Close filter
     close_form_title: Close form
-    boards:
-      upsale:
-        boards: Need to freely structure your work in a board view?
-        check_out_link: Check out the Enterprise Edition.
-      lists:
-        delete: Delete list
     card:
       add_new: Add new card
       highlighting:
@@ -51,7 +45,7 @@ vi:
     button_duplicate: Nhân đôi
     button_edit: Chỉnh sửa
     button_filter: Bộ lọc
-    button_advanced_filter: Advanced filter
+    button_advanced_filter: Bộ lọc nâng cao
     button_list_view: Xem kiểu danh sách
     button_show_view: Xem toàn màn hình
     button_log_time: Thời gian truy cập
@@ -72,7 +66,7 @@ vi:
       too_many: There are more work packages (%{count}) than can be displayed by the
         calendar (%{max}). Add filters to focus on the relevant ones.
     description_available_columns: Cột có sẵn
-    description_current_position: 'Bạn đang ở đây:'
+    description_current_position: 'You are here: '
     description_select_work_package: 'Chọn work package #%{id}'
     description_selected_columns: Các cột được lựa chọn
     description_subwork_package: 'Con của work package #%{id}'
@@ -165,41 +159,52 @@ vi:
     general_text_Yes: Có
     grid:
       add_modal:
-        choose_widget: Choose widget
+        choose_widget: Chọn tiện ích
       widgets:
         documents:
-          title: Documents
-          no_results: No documents yet.
+          title: Tài liệu
+          no_results: Chưa có tài liệu.
         news:
           title: Tin tức
-          at: at
+          at: tại
           no_results: Không có gì mới để báo cáo.
         time_entries_current_user:
-          title: Spent time (last 7 days)
-          no_results: No time entries for the last 7 days.
+          title: Thời gian làm việc (trong 7 ngày gần nhất)
+          no_results: Không có ghi nhận thời gian làm việc trong 7 ngày gần nhất.
         work_packages_accountable:
           title: Gói công việc mà tôi có trách nhiệm
         work_packages_assigned:
           title: Work package được chỉ định cho tôi
         work_packages_created:
-          title: Work packages created by me
+          title: Công việc tạo bởi tôi
         work_packages_watched:
-          title: Work packages watched by me
+          title: Công việc có liên quan tới tôi
         work_packages_table:
           title: Work Packages
         work_packages_calendar:
           title: Lịch
+    homescreen:
+      blocks:
+        new_features:
+          text_new_features: Read about new features and product updates.
+          current_new_feature_html: 'OpenProject contains a new <b>Boards view</b>
+            for Agile project management. </br> To activate this new feature for your
+            existing projects, please do the following steps: <ul><li>Activate the
+            module Boards within existing projects'' settings.</li> <li>Configure
+            your Boards in a project.</li> <li>Verify roles and permissions</li></ul>'
+          image_alt_text: Board teaser image
+          learn_about: Learn more about Agile Boards
     label_activate: Activate
     label_activity_no: Số chỉ mục hoạt động %{activityNo}
     label_activity_with_comment_no: Số chỉ mục hoạt động %{activityNo}. Có một nhận
       xét của người dùng.
-    label_add_column_after: Add column after
-    label_add_column_before: Add column before
+    label_add_column_after: Thêm cột phía sau
+    label_add_column_before: Thêm cột phía trước
     label_add_columns: Add columns
     label_add_comment: Thêm bình luận
     label_add_comment_title: Comment and type @ to notify other people
-    label_add_row_after: Add row after
-    label_add_row_before: Add row before
+    label_add_row_after: Thêm dòng bên dưới
+    label_add_row_before: Thêm dòng bên trên
     label_add_selected_columns: Thêm cột đang chọn
     label_added_by: được gửi bởi
     label_added_time_by: Thêm bởi %{author} %{age}
@@ -214,6 +219,7 @@ vi:
     label_board_locked: Đã khóa
     label_board_plural: Boards
     label_board_sticky: Chú ý
+    label_create: Tạo mới
     label_create_work_package: Create new work package
     label_created_by: Created by
     label_date: Ngày
@@ -279,9 +285,9 @@ vi:
     label_visibility_settings: Cài đặt hiển thị
     label_quote_comment: Trích bình luận này
     label_reset: Reset
-    label_remove_column: Remove column
+    label_remove_column: Xóa cột
     label_remove_columns: Loại bỏ cột được chọn
-    label_remove_row: Remove row
+    label_remove_row: Xóa hàng
     label_save_as: Lưu thành
     label_select_watcher: Chọn một người theo dõi...
     label_selected_filter_list: 'Các bộ lọc đã chọn: %s'
@@ -303,7 +309,7 @@ vi:
     label_activity_show_only_comments: Hiển thị các hoạt động với các bình luận
     label_activity_show_all: Hiển thị các hoạt động
     label_total_progress: "%{percent}% Tổng tiến độ"
-    label_total_amount: 'Total: %{amount}'
+    label_total_amount: Tổng số tiền%{amount}
     label_updated_on: cập Nhật ngày
     label_warning: Warning
     label_work_package: Work Package
@@ -414,8 +420,11 @@ vi:
       selection: Vui lòng chọn
       relation_description: Click to add description for this relation
     project:
-      required_outside_context: You are not within a project context. Please choose
-        the project context first in order to select type and status
+      required_outside_context: 'Please choose a project to create the work package
+        in to see all attributes. You can only select projects which have the type
+        above activated.
+
+'
       context: Project context
       work_package_belongs_to: This work package belongs to project %{projectname}.
       click_to_switch_context: Open this work package in that project.
@@ -505,8 +514,8 @@ vi:
       save: Save relation
       abort: Abort
     relations_autocomplete:
-      placeholder: Enter the related work package id
-      parent_placeholder: Choose new parent, press enter to unset, escape to cancel.
+      placeholder: Type to search
+      parent_placeholder: Choose new parent or press escape to cancel.
     repositories:
       select_tag: Chọn từ khóa
       select_branch: Chọn nhánh
@@ -654,7 +663,7 @@ vi:
       label_enable_multi_select: Enable multiselect
       label_disable_multi_select: Disable multiselect
       label_filter_add: Thêm bộ lọc
-      label_filter_by_text: Filter by text
+      label_filter_by_text: Lọc bởi %text
       label_options: Tuỳ chọn
       label_column_multiselect: 'Combined dropdown field: Select with arrow keys,
         confirm selection with enter, delete with backspace'
@@ -667,7 +676,7 @@ vi:
       message_work_package_read_only: Work package is locked in this status. No attribute
         other than status can be altered.
       no_value: No value
-      placeholder_filter_by_text: Subject, description, comments, ...
+      placeholder_filter_by_text: Chủ đề, mô tả, bình luận, ...
       inline_create:
         title: Click vào đây để thêm một work package mới vào danh sách này
       create:
@@ -881,7 +890,7 @@ vi:
         messages_on_field: 'Mục này không hợp lệ: %{messages}'
     error_could_not_resolve_version_name: Couldn't resolve version name
     error_could_not_resolve_user_name: Couldn't resolve user name
-    error_attachment_upload: 'File failed to upload: %{error}'
+    error_attachment_upload: Tập tin tải lên thất bại.%{error}
     error_attachment_upload_permission: Bạn không có quyền tải lên tập tin vào tài
       nguyên này.
     units:
@@ -899,12 +908,12 @@ vi:
       button_activate: Activate zen mode
       button_deactivate: Deactivate zen mode
     global_search:
-      all_projects: In all projects
+      all_projects: Cho tất cả các dự án
       search: Search
-      close_search: Close search
-      current_project: In this project
-      current_project_and_all_descendants: In this project + subprojects
+      close_search: Đóng tìm kiếm
+      current_project: Trong dự án này
+      current_project_and_all_descendants: Trong dự án này + các dự án con
       title:
-        all_projects: all projects
-        project_and_subprojects: and all subprojects
-        search_for: Search for
+        all_projects: mọi dự án
+        project_and_subprojects: và tất cả các dự án con
+        search_for: Tìm kiếm

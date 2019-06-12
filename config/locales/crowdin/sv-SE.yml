@@ -113,15 +113,18 @@ sv-SE:
     single: or
   deprecations:
     old_timeline:
-      replacement: Den här tidslinjemodulen ersätts av den interaktiva tidslinjen
-        som finns inbäddad i arbetspaketsmodulen.
-      removal: Den här modulen kommer att tas bort i OpenProject 8.0. Inställningarna
-        för den här vyn kommer INTE att migreras till arbetspaketsvyn.
-      further_information_before: Ta gärna en titt på
-      link_name: hur du migrerar till den nya tidslinjen.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -424,6 +427,7 @@ sv-SE:
         spent_on: Datum
         type: Typ
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -599,6 +603,10 @@ sv-SE:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: är inte en katalog.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Arbetspaket #%{id} är inte ett
             giltigt mål för omfördelning av tidrapporterna.'
@@ -661,7 +669,15 @@ sv-SE:
               error_not_found: hittades inte
         member:
           principal_blank: Välj minst en användare eller grupp.
-          role_blank: Välj minst en roll.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Kontrollera följande fält:'
         header:
@@ -841,6 +857,7 @@ sv-SE:
     started: Började kopiera projekt "%{source_project_name}" till "%{target_project_name}".
       Du kommer att informeras via E-post när "%{target_project_name}" finns tillgängligt.
     failed: Kan inte kopiera projekt %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Skapade projektet %{target_project_name}
     errors: Fel
     project_custom_fields: Custom fields on project
@@ -1007,7 +1024,7 @@ sv-SE:
   description_choose_project: Projekt
   description_compare_from: Jämför formulär
   description_compare_to: Jämför med
-  description_current_position: 'Du är här:'
+  description_current_position: 'You are here: '
   description_date_from: Ange startdatum
   description_date_range_interval: Välj intervall genom att välja start- och slutdatum
   description_date_range_list: Välj intervall i listan
@@ -1060,11 +1077,11 @@ sv-SE:
   error_cookie_missing: OpenProject cookie saknas. Vänligen kontrollera att cookies
     är aktiverade, eftersom detta program inte fungerar korrekt annars.
   error_custom_option_not_found: Alternativet finns inte.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Det gick inte ta bort denna post.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Kan inte gruppera efter: %{value}'
   error_invalid_query_column: 'Ogiltig frågekolumn: %{value}'
@@ -1446,6 +1463,7 @@ sv-SE:
   label_max_size: Maximal storlek
   label_me: mig
   label_member_new: Ny medlem
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Medlemmar
   label_view_all_members: Visa alla medlemmar
   label_menu_item_name: Namn på menyalternativ
@@ -1474,6 +1492,7 @@ sv-SE:
   label_my_queries: Min anpassade frågor
   label_never: Aldrig
   label_new: Ny
+  label_new_features: New features
   label_new_statuses_allowed: Nya statusar tillåtna
   label_news_added: Nyheter tillagda
   label_news_comment_added: Kommentar tillagd till en nyhet
@@ -1902,7 +1921,6 @@ sv-SE:
   notice_to_many_principals_to_display: "Det finns för många resultat. \nBegränsa
     sökningen genom att skriva namnet på den nya medlemmen (eller gruppen)."
   notice_unable_delete_time_entry: Det gick inte att ta bort tidrapport.
-  notice_unable_delete_version: Det gick inte att ta bort version.
   notice_user_missing_authentication_method: Användaren har ännu inte valt ett lösenord
     eller annat sätt logga in.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1950,6 +1968,7 @@ sv-SE:
   permission_add_project: Skapa projekt
   permission_add_subprojects: Skapa delprojekt
   permission_add_work_package_watchers: Lägg till bevakare
+  permission_assign_versions: Assign versions
   permission_browse_repository: Skrivskyddad åtkomst till databasen (bläddra och och
     checka ut)
   permission_change_wiki_parent_page: Ändra överordnad wiki-sida
@@ -2755,12 +2774,9 @@ sv-SE:
   menu_item: Menyalternativ
   menu_item_setting: Synlighet
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Menyobjekt för wiki-sida "%{title}"
   wiki_menu_item_setting: Synlighet
   wiki_menu_item_new_main_item_explanation: 'Du tar bort det enda huvudobjektet i
@@ -2784,6 +2800,7 @@ sv-SE:
     attributes:
       lock_version: Lås version
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Du måste autentiseras för att få tillgång till denna resurs.
       code_401_wrong_credentials: Du har inte lämnat korrekta autentiseringsuppgifter.
       code_403: Du har inte behörighet att få tillgång till denna resurs.
@@ -2810,6 +2827,8 @@ sv-SE:
       multipart_body_error: Frågan innehöll inte de förväntade multipart sektionerna.
       multiple_errors: Flera villkor för fält har överträtts.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: Kontexten som angavs är inte en länk till en resurs.
         unsupported_context: Resursen som angavs stöds inte som kontext.

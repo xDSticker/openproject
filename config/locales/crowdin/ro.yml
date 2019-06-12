@@ -113,16 +113,18 @@ ro:
     single: sau
   deprecations:
     old_timeline:
-      replacement: Acest modul cronologic va fi înlocuit de către cronologia interactivă
-        inclusă în modulul pachetului de lucru.
-      removal: Acest modul va fi exclus începând cu OpenProject 8.0. Setările pentru
-        această configurație NU vor transferate în cadrul configurației pachetului
-        de lucru.
-      further_information_before: Vă rugăm să accesați
-      link_name: cum să realizați transferul la noua cronologie.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -434,6 +436,7 @@ ro:
         spent_on: Dată
         type: Tip
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -606,6 +609,10 @@ ro:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: nu este un director.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Pachetul de lucru #%{id} nu este
             o ţintă validă pentru reasocierea timpilor de lucru.'
@@ -670,7 +677,15 @@ ro:
               error_not_found: not found
         member:
           principal_blank: Trebuie să alegeţi cel puţin un utilizator sau grup.
-          role_blank: Trebuie să alegeţi cel puţin un rol.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Verificaţi următoarele câmpuri:'
         header:
@@ -855,6 +870,7 @@ ro:
     started: A început copierea proiectului "%{source_project_name}" în "%{target_project_name}".
       Veţi fi informat prin mail de îndată ce "%{target_project_name}" este disponibil.
     failed: Proiectul %{source_project_name} nu poate fi copiat
+    failed_internal: Copying failed due to an internal error.
     succeeded: Proiectul %{target_project_name} a fost creat
     errors: Eroare
     project_custom_fields: Câmpuri personalizate pentru proiect
@@ -1034,7 +1050,7 @@ ro:
   description_choose_project: Proiecte
   description_compare_from: Compare from
   description_compare_to: Compare to
-  description_current_position: 'Sunteți aici:'
+  description_current_position: 'You are here: '
   description_date_from: Introduceţi data de început
   description_date_range_interval: Alegeți intervalul selectând datele de început
     și sfârșit
@@ -1089,11 +1105,11 @@ ro:
   error_cookie_missing: Cookie-ul OpenProject lipseşte. Vă rugăm să verificați setările
     referitoare la cookies, această aplicație nu va funcţiona corespunzător fără acestea.
   error_custom_option_not_found: Option does not exist.
-  error_dependent_work_package: 'Eroare în pachetele de lucru dependente #%{related_id}
-    %{related_subject}: %{error}'
   error_enterprise_activation_user_limit: Contul dvs. nu a putut fi activat (limita
     utilizatorilor a fost atinsă). Contactați administratorul dvs. pentru a avea acces.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1476,6 +1492,7 @@ ro:
   label_max_size: Dimensiunea maximă
   label_me: eu
   label_member_new: Membru nou
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Membri
   label_view_all_members: Vizualizare toți participanții
   label_menu_item_name: Numele meniului
@@ -1504,6 +1521,7 @@ ro:
   label_my_queries: Interogările mele
   label_never: Niciodată
   label_new: Nou
+  label_new_features: New features
   label_new_statuses_allowed: Stări noi permise
   label_news_added: Noutăți adăugate
   label_news_comment_added: Comentariu adăugat la noutăți
@@ -1945,7 +1963,6 @@ ro:
   notice_to_many_principals_to_display: Există prea multe rezultate. Restrângeți căutarea
     prin tastarea numelui noului membru (sau grup).
   notice_unable_delete_time_entry: Nu se poate șterge intrarea de jurnal.
-  notice_unable_delete_version: Nu se poate șterge versiunea.
   notice_user_missing_authentication_method: Utilizatorul nu a ales încă o parolă
     sau un alt mod de autentificare.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1994,6 +2011,7 @@ ro:
   permission_add_project: Creare proiect
   permission_add_subprojects: Creare subproiecte
   permission_add_work_package_watchers: Adăugare observatori
+  permission_assign_versions: Assign versions
   permission_browse_repository: Acces doar citire la repo (vizualizare și descărcare)
   permission_change_wiki_parent_page: Schimbare pagina wiki părinte
   permission_comment_news: Comentare noutăți
@@ -2829,12 +2847,9 @@ ro:
   menu_item: Element de meniu
   menu_item_setting: Vizibilitate
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Meniu pentru pagina wiki "%{title}"
   wiki_menu_item_setting: Vizibilitate
   wiki_menu_item_new_main_item_explanation: 'Ștergeți doar meniul principal wiki.
@@ -2859,6 +2874,7 @@ ro:
     attributes:
       lock_version: Blocare versiune
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Trebuie să fiți autentificat pentru a accesa această resursă.
       code_401_wrong_credentials: Nu ați furnizat credențialele corecte.
       code_403: Nu sunteți autorizat să accesați această resursă.
@@ -2885,6 +2901,8 @@ ro:
       multipart_body_error: Conținutul nu cuprinde componentele multipart așteptate.
       multiple_errors: Au fost încălcate multiple constrângeri pentru câmpuri.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: Contextul primit nu reprezintă un link la o resursă.
         unsupported_context: Resursa furnizată nu este suportată ca și context.

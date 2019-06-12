@@ -17,12 +17,6 @@ zh-TW:
     close_popup_title: 關閉彈出式視窗
     close_filter_title: 關閉篩選器
     close_form_title: 關閉表單
-    boards:
-      upsale:
-        boards: Need to freely structure your work in a board view?
-        check_out_link: 請查閱企業版
-      lists:
-        delete: Delete list
     card:
       add_new: Add new card
       highlighting:
@@ -69,7 +63,7 @@ zh-TW:
       title: 行事曆
       too_many: 與日曆 (%{max}) 所顯示的工作包 (%{count}) 相比, 有更多的工作包 (123_0_321)。添加篩選器以將焦點放在相關篩選器上。
     description_available_columns: 可用欄
-    description_current_position: 您在這裏：
+    description_current_position: 'You are here: '
     description_select_work_package: '選取工作項目 #%{id}'
     description_selected_columns: 所選的欄
     description_subwork_package: '子工作項目 #%{id}'
@@ -178,6 +172,17 @@ zh-TW:
           title: 工作項目
         work_packages_calendar:
           title: 行事曆
+    homescreen:
+      blocks:
+        new_features:
+          text_new_features: Read about new features and product updates.
+          current_new_feature_html: 'OpenProject contains a new <b>Boards view</b>
+            for Agile project management. </br> To activate this new feature for your
+            existing projects, please do the following steps: <ul><li>Activate the
+            module Boards within existing projects'' settings.</li> <li>Configure
+            your Boards in a project.</li> <li>Verify roles and permissions</li></ul>'
+          image_alt_text: Board teaser image
+          learn_about: Learn more about Agile Boards
     label_activate: 啟用
     label_activity_no: 活動條目編號 %{activityNo}
     label_activity_with_comment_no: 活動條目編號 %{activityNo}。有的使用者評論。
@@ -202,6 +207,7 @@ zh-TW:
     label_board_locked: 鎖定
     label_board_plural: Boards
     label_board_sticky: 附著
+    label_create: 建立
     label_create_work_package: 建立新的工作項目
     label_created_by: 建立由
     label_date: 日期
@@ -379,7 +385,11 @@ zh-TW:
       selection: 請選擇
       relation_description: 按一下以便為此關係添加描述
     project:
-      required_outside_context: 你不是在專案內容範圍內。請先選擇專案內容再選擇類型和狀態
+      required_outside_context: 'Please choose a project to create the work package
+        in to see all attributes. You can only select projects which have the type
+        above activated.
+
+'
       context: 專案內容
       work_package_belongs_to: 此工作項目屬於專案 %{projectname}。
       click_to_switch_context: 在該專案中打開此工作項目。
@@ -464,8 +474,8 @@ zh-TW:
       save: 儲存關聯
       abort: 捨棄
     relations_autocomplete:
-      placeholder: 輸入相關的工作包 ID
-      parent_placeholder: 選擇新的父項, 按 enter 恢復設置, 按esc 取消。
+      placeholder: Type to search
+      parent_placeholder: Choose new parent or press escape to cancel.
     repositories:
       select_tag: 選擇標籤
       select_branch: 選擇分支

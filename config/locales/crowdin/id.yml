@@ -114,15 +114,18 @@ id:
     single: or
   deprecations:
     old_timeline:
-      replacement: Modul jadwal in digantikan oleh jadwal interaktiv yang dilekatkan
-        ke dalam paket modul kerja.
-      removal: Modul ini akan dihilangkan dengan OpenProject 8.0. Konfigurasi untuk
-        tampilan ini tidak akan di migrasikan ke tampilan paket kerja.
-      further_information_before: Silahkan lihat di
-      link_name: bagaimana untuk bermigrasi ke jadwal baru.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Harap dicatat: Modul ini akan dihilangkan dengan OpenProject 8.0.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -421,6 +424,7 @@ id:
         spent_on: Tanggal
         type: Tipe
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -596,6 +600,10 @@ id:
           invalid_url: bukan tempat penyimpanan atau alamat URL yang benar.
           must_not_be_ssh: tidak boleh sebuah url SSH.
           no_directory: is not a directory.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Paket-Penugasan #%{id} tidak valid
             untuk reassigning di Time entri.'
@@ -657,7 +665,15 @@ id:
               error_not_found: tidak ditemukan
         member:
           principal_blank: Silakan pilih setidaknya satu user atau grup.
-          role_blank: Silakan pilih setidaknya satu Role.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Silakan periksa isian berikut :'
         header:
@@ -836,6 +852,7 @@ id:
     started: Started to copy project "%{source_project_name}" to "%{target_project_name}".
       You will be informed by mail as soon as "%{target_project_name}" is available.
     failed: Tidak dapat meng-copy Project %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Project %{target_project_name} telah dibuat
     errors: Eror
     project_custom_fields: Field kustom pada proyek
@@ -1003,7 +1020,7 @@ id:
   description_choose_project: Project
   description_compare_from: Bandingkan dari
   description_compare_to: Bandingkan dengan
-  description_current_position: 'Anda di sini:'
+  description_current_position: 'You are here: '
   description_date_from: Masukkan tanggal start
   description_date_range_interval: Pilih durasi dengan memilih tanggal start dan finish
   description_date_range_list: Pilih durasi dari daftar
@@ -1059,11 +1076,11 @@ id:
   error_cookie_missing: The OpenProject cookie is missing. Please ensure that cookies
     are enabled, as this application will not properly function without.
   error_custom_option_not_found: Pilihan tidak ada.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Gagal untuk menghapus isian ini.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Tidak dapat dikelompokkan dengan: %{value}'
   error_invalid_query_column: 'Permintaan tidak valid kolom: %{value}'
@@ -1445,6 +1462,7 @@ id:
   label_max_size: Ukuran maks.
   label_me: saya
   label_member_new: Member baru
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Member
   label_view_all_members: View all members
   label_menu_item_name: Nama item menu
@@ -1473,6 +1491,7 @@ id:
   label_my_queries: Query kustom saya
   label_never: Never
   label_new: Baru
+  label_new_features: New features
   label_new_statuses_allowed: Status baru yang diijinkan
   label_news_added: News ditambahkan
   label_news_comment_added: Komentar ditambahkan ke dalam Berita
@@ -1900,7 +1919,6 @@ id:
   notice_to_many_principals_to_display: Ada terlalu banyak hasil. Persempit pencarian
     dengan mengetik nama member baru (atau grup).
   notice_unable_delete_time_entry: Entri time log tidak bisa dihapus.
-  notice_unable_delete_version: Gagal menghapus versi.
   notice_user_missing_authentication_method: User has yet to choose a password or
     another way to sign in.
   notice_user_invitation_resent: Sebuah undangan telah dikirim ke %{email}.
@@ -1948,6 +1966,7 @@ id:
   permission_add_project: Buat Project
   permission_add_subprojects: Buat Sub Project
   permission_add_work_package_watchers: Tambah pemantau
+  permission_assign_versions: Assign versions
   permission_browse_repository: Read-only access to repository (browse and checkout)
   permission_change_wiki_parent_page: Ubah halaman induk Wiki
   permission_comment_news: Komentar berita
@@ -2752,12 +2771,9 @@ id:
   menu_item: Menu item
   menu_item_setting: Visibilitas
   mysql_deprecation:
-    notice: 'Versi lanjut OpenProject kemungkinan akan menghentikan atau mengurangi
-      dukungan terhadap database Mysql dan MariaDB. Instalasi anda masih menggunakan
-      MySQL dan kami sarankan anda untuk melakukan migrasi ke PostgreSQL. Agar proses
-      migrasi lebih mudah disarankan untuk mengikuti panduan migrasi kami:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Menu untuk Halaman Wiki "%{title}"
   wiki_menu_item_setting: Visibilitas
   wiki_menu_item_new_main_item_explanation: 'You are deleting the only main wiki menu
@@ -2781,6 +2797,7 @@ id:
     attributes:
       lock_version: Lock Version
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Anda perlu dikonfirmasi untuk mengakses sumber ini.
       code_401_wrong_credentials: You did not provide the correct credentials.
       code_403: Anda tidak diizinkan untuk mengakses sumber ini.
@@ -2808,6 +2825,8 @@ id:
         parts.
       multiple_errors: Multiple field constraints have been violated.
       unable_to_create_attachment: Unduhan tidak bisa dibuat
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: The context provided is not a link to a resource.
         unsupported_context: The resource given is not supported as context.

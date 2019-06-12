@@ -112,15 +112,18 @@ pl:
     single: lub
   deprecations:
     old_timeline:
-      replacement: Ten moduł osi czasu jest zastępowany przez interaktywny widok osi
-        czasu osadzony w module zadań.
-      removal: Ten moduł będzie usunięty w OpenProject 8.0. Konfiguracja dla tego
-        widoku NIE będzie przeniesiona do widoku zadania.
-      further_information_before: Spójrz na
-      link_name: jak migrować na nową oś czasu.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Uwaga: moduł ten jest planowany do usunięcia w OpenProject 8.0.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -423,6 +426,7 @@ pl:
         spent_on: Data
         type: Typ
       type:
+        description: Domyślny tekst opisu
         attribute_groups: ''
         is_in_roadmap: Domyślnie wyświetlany w planie działania
         is_default: Domyślnie aktywny dla nowych projektów
@@ -600,6 +604,10 @@ pl:
           invalid_url: nie jest prawidłowym adresem URL ani ścieżką.
           must_not_be_ssh: nie może być adresem SSH.
           no_directory: nie jest katalogiem.
+        role:
+          permissions:
+            dependency_missing: musi również uwzględniać wybór '%{dependency}' jako
+              '%{permission}'.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Zadanie #%{id} jest niepoprawnym
             celem do ponownego rozpisania czasu.'
@@ -634,7 +642,8 @@ pl:
           attributes:
             attribute_groups:
               attribute_unknown: Użyto nieprawidłowego atrybutu zadania.
-              attribute_unknown_name: 'Invalid work package attribute used: %{attribute}'
+              attribute_unknown_name: Użyto nieprawidłowego atrybutu pakietu roboczego.
+                %{attribute}
               duplicate_group: Nazwy grupy %{group} użyto więcej niż raz. Nazwy grup
                 muszą być niepowtarzalne.
               query_invalid: 'Osadzona kwerenda %{group} jest nieprawidłowowa: %{details}'
@@ -663,7 +672,15 @@ pl:
               error_not_found: nie znaleziono
         member:
           principal_blank: Wybierz co najmniej jeden użytkownik lub Grupa.
-          role_blank: Proszę wybrać przynajmniej jedną rolę.
+          role_blank: musi być przypisany.
+          attributes:
+            roles:
+              ungrantable: ma rolę, której nie można przypisać.
+            principal:
+              unassignable: nie można przypisać do projektu.
+        version:
+          undeletable_work_packages_attached: Wersji nie można usunąć, ponieważ dołączone
+            są do niej pakiety robocze.
       template:
         body: 'Sprawdź następujące pola:'
         header:
@@ -848,6 +865,7 @@ pl:
       Poinformujemy Cię przez e-mail tak szybko jak "%{target_project_name}" będzie
       dostępny.
     failed: Nie można skopiować projektu %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Utworzono projekt %{target_project_name}
     errors: Błąd
     project_custom_fields: Niestandardowe pola projektu
@@ -1038,7 +1056,7 @@ pl:
   description_choose_project: Projekty
   description_compare_from: Porównaj z
   description_compare_to: W porównaniu do
-  description_current_position: 'Jesteś tutaj:'
+  description_current_position: 'Jesteś tutaj: '
   description_date_from: Wprowadź datę początkową
   description_date_range_interval: Wybierz zakres wybierając datę rozpoczęcia i zakończenia
   description_date_range_list: Wybierz zakres z listy
@@ -1095,12 +1113,12 @@ pl:
     plików cookie jest włączona, ponieważ bez tego aplikacja nie będzie funkcjonować
     prawidłowo.
   error_custom_option_not_found: Opcja nie istnieje.
-  error_dependent_work_package: 'Błąd w zależnym pakiecie roboczym #%{related_id}
-    %{related_subject}: %{error}'
   error_enterprise_activation_user_limit: Twoje konto nie mogło zostać aktywowane
     (osiągnięty limit użytkownika). Skontaktuj się z administratorem, aby uzyskać
     dostęp.
   error_failed_to_delete_entry: Nie udało się usunąć tego wpisu.
+  error_in_dependent: 'Błąd podczas próby zmiany obiektu zależnego: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Nieprawidłowa wybrana wartość.
   error_invalid_group_by: 'Nie można grupować przez: %{value}'
   error_invalid_query_column: 'Nieprawidłowa kolumna zapytań: %{value}'
@@ -1485,6 +1503,7 @@ pl:
   label_max_size: Maksymalny rozmiar
   label_me: ja
   label_member_new: Nowy członek
+  label_member_all_admin: "(Wszystkie role związane ze statusem administratora)"
   label_member_plural: Członkowie
   label_view_all_members: Zobacz wszystkich członków
   label_menu_item_name: Nazwa elementu menu
@@ -1513,6 +1532,7 @@ pl:
   label_my_queries: Moje zapytania niestandardowe
   label_never: Nigdy
   label_new: Nowy
+  label_new_features: Nowe funkcje
   label_new_statuses_allowed: Nowe statusy dozwolone
   label_news_added: Wiadomość dodana
   label_news_comment_added: Komentarz został dodany do wiadomości
@@ -1963,7 +1983,6 @@ pl:
     Istnieje zbyt wiele wyników.
     Należy zawęzić wyszukiwanie przez wpisanie w nazwy użytkownika (lub grupy).
   notice_unable_delete_time_entry: Nie można usunąć wpisu dziennika.
-  notice_unable_delete_version: Nie można usunąć wersji.
   notice_user_missing_authentication_method: Użytkownik jeszcze nie wybrał sposobu
     logowania przez hasło lub inaczej.
   notice_user_invitation_resent: Zaproszenie wysłano do %{email}.
@@ -2013,6 +2032,7 @@ pl:
   permission_add_project: Tworzenie projektu
   permission_add_subprojects: Tworzenie podprojektów
   permission_add_work_package_watchers: Dodawanie obserwatorów
+  permission_assign_versions: Przypisz wersje
   permission_browse_repository: Dostęp do repozytorium tylko do odczytu (przegląd
     i sprawdzenie)
   permission_change_wiki_parent_page: Zmiana strony nadrzędnej wiki
@@ -2833,12 +2853,9 @@ pl:
   menu_item: Element menu
   menu_item_setting: Widoczność
   mysql_deprecation:
-    notice: 'Przyszłe wersje OpenProject prawdopodobnie nie będą obsługiwać baz danych
-      MySQL i MariaDB lub ograniczą ich obsługę. Ta instalacja nadal działa z bazą
-      MySQL i zalecamy migrację instalacji do PostgreSQL. Proces ten jest łatwy, gdy
-      postępuje się zgodnie z naszymi instrukcjami migracji:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Element menu dla strony wiki "%{title}"
   wiki_menu_item_setting: Widoczność
   wiki_menu_item_new_main_item_explanation: 'Usuwasz jedyny główny element menu wiki.
@@ -2863,6 +2880,7 @@ pl:
     attributes:
       lock_version: Wersja zablokowana
     errors:
+      code_400: 'Nieprawidłowe żądanie: %{message}'
       code_401: Musisz być uwierzytelniony, aby otrzymać dostęp do tego zasobu.
       code_401_wrong_credentials: Nie wprowadziłeś prawidłowych danych uwierzytelniania.
       code_403: Nie masz uprawnień do tego zasobu.
@@ -2891,6 +2909,8 @@ pl:
         elementów.
       multiple_errors: Zostały naruszone ograniczenia wielu pól.
       unable_to_create_attachment: Nie można utworzyć załącznika
+      unable_to_create_attachment_permissions: Nie można zapisać załącznika ze względu
+        na brak uprawnień do systemu plików
       render:
         context_not_parsable: Podany kontekst nie jest linkiem do zasobu.
         unsupported_context: Podany zasób nie jest obsługiwany jako kontekst.

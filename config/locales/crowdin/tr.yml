@@ -112,15 +112,18 @@ tr:
     single: ya da
   deprecations:
     old_timeline:
-      replacement: Bu zaman akışı modülü iş paketleri modülüyle birleşik etkileşimli
-        zaman akışı modülüyle değiştirilecektir.
-      removal: Bu modül OpenProject 8.0 ile kaldırılacak. Bu görünümün ayarları iş
-        paketleri görünümüne taşınmayacak.
-      further_information_before: Lütfen bir göz atın
-      link_name: yeni zaman akışına nasıl geçerilir.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Lütfen dikkat: Bu modül OpenProject 8.0 ile kaldırılacak.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Viki
@@ -420,6 +423,7 @@ tr:
         spent_on: Tarih
         type: Tür
       type:
+        description: Açıklama için varsayılan metin
         attribute_groups: ''
         is_in_roadmap: Yol haritasında varsayılan olarak gösterilsin
         is_default: Yeni projelerde varsayılan olarak aktif
@@ -597,6 +601,10 @@ tr:
           invalid_url: geçerli bir depo URL veya yol değil.
           must_not_be_ssh: bir SSH url olmamalı.
           no_directory: bir dizin değil.
+        role:
+          permissions:
+            dependency_missing: "'%'%{dependency}' seçili olduğundan,'%{permission}'
+              \ ı da eklemeniz gerekir."
         work_package:
           is_not_a_valid_target_for_time_entries: 'İş paketi #%{id} zaman girdilerini
             yeniden atama için geçerli bir hedef değil.'
@@ -657,7 +665,15 @@ tr:
               error_not_found: bulunamadı
         member:
           principal_blank: Lütfen en az bir kullanıcı veya grup seçin.
-          role_blank: Lütfen en az bir rol seçin.
+          role_blank: atanması gerek.
+          attributes:
+            roles:
+              ungrantable: atanamaz bir rolü var.
+            principal:
+              unassignable: bir projeye atanamaz.
+        version:
+          undeletable_work_packages_attached: Eklenmiş iş paketleri olduğu için sürüm
+            silinemez.
       template:
         body: 'Lütfen aşağıdaki alanları kontrol edin:'
         header:
@@ -840,6 +856,7 @@ tr:
       bir projeye kopyalanmaya başladı. "%{target_project_name}" projesi hazır olduğunda
       e-posta ile bilgilendirileceksiniz.'
     failed: "%{source_project_name} project kopyalanamadı"
+    failed_internal: Dahili bir hata nedeniyle kopyalama başarısız oldu.
     succeeded: "%{target_project_name} project oluşturuldu"
     errors: Hata
     project_custom_fields: Projedeki özel alanlar
@@ -1063,11 +1080,11 @@ tr:
   error_cookie_missing: OpenProject çerezi yok. Lütfen uygulamanın düzgün çalışabilmesi
     için, tarayıcınızda çerezlere izin verildiğine emin olun.
   error_custom_option_not_found: Seçenek yok.
-  error_dependent_work_package: 'Bağımlı #%{related_id} %{related_subject} iş paketinde
-    hata: %{error}'
   error_enterprise_activation_user_limit: Hesabınız etkinleştirilemedi (kullanıcı
     limitine ulaşıldı). Erişim sağlamak için lütfen yöneticinize başvurun.
   error_failed_to_delete_entry: Girdi silinemedi.
+  error_in_dependent: 'Bağımlı nesneyi değiştirmeye çalışırken hata: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Seçili değeri geçersiz.
   error_invalid_group_by: "%{value} ya göre guplandırılamadı"
   error_invalid_query_column: 'Geçersiz sorgu sütunu: %{value}'
@@ -1449,6 +1466,7 @@ tr:
   label_max_size: Maksimum boyut
   label_me: ben
   label_member_new: Yeni Üye
+  label_member_all_admin: "(Yönetici durumuna bağlı olarak tüm roller)"
   label_member_plural: Üyeler
   label_view_all_members: Tüm üyeleri göster
   label_menu_item_name: Menü öğesinin ismi
@@ -1477,6 +1495,7 @@ tr:
   label_my_queries: Özel sorgularım
   label_never: Hiçbir zaman
   label_new: Yeni
+  label_new_features: Yeni özellikler
   label_new_statuses_allowed: İzin verilen yeni durumlar
   label_news_added: Haberler eklendi
   label_news_comment_added: Yorum bir haberlere eklendi
@@ -1904,7 +1923,6 @@ tr:
   notice_to_many_principals_to_display: Çok fazla sonuç var. Yeni üyenin (veya grubun)
     adını yazarak aramayı daraltın.
   notice_unable_delete_time_entry: Zaman kaydı girişi silinemiyor.
-  notice_unable_delete_version: Sürüm açılamadı.
   notice_user_missing_authentication_method: Kullanıcı henüz şifre veya oturum açmak
     için başka bir yol seçmemiştir.
   notice_user_invitation_resent: "%{email} adresine bir davet gönderildi."
@@ -1952,6 +1970,7 @@ tr:
   permission_add_project: Proje oluşturmak
   permission_add_subprojects: Alt proje oluşturmak
   permission_add_work_package_watchers: Takipçi ekle
+  permission_assign_versions: Sürüm ata
   permission_browse_repository: Depoya salt okunur erişim (göz atma ve ödeme)
   permission_change_wiki_parent_page: Üst Wiki sayfasını değiştirmek
   permission_comment_news: Haberlere yorum yazmak
@@ -2768,12 +2787,9 @@ tr:
   menu_item: Menü seçeneği
   menu_item_setting: Görünürlük
   mysql_deprecation:
-    notice: 'OpenProject''in gelecekteki sürümleri MySQL ve MariaDB veritabanları
-      için desteği büyük olasılıkla düşürecek veya azaltacaktır. Kurulumunuz hala
-      MySQL''de çalışıyor ve kurulumunuzu PostgreSQL''e geçirmenizi öneririz. Geçiş
-      rehberlerimizi takip ederken bu işlem kolaydır:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Wikipage için menü öğesi " %{title} "
   wiki_menu_item_setting: Görünürlük
   wiki_menu_item_new_main_item_explanation: 'Sadece ana wiki menü öğesini silmektesiniz.
@@ -2796,6 +2812,7 @@ tr:
     attributes:
       lock_version: Sürümü Kilitle
     errors:
+      code_400: 'Geçersiz istek: %{message}'
       code_401: Bu kaynağa erişim sağlayabilmeniz için yetkilendirilmiş olmalısınız
       code_401_wrong_credentials: Doğru kimlik bilgilerini sağlamadınız.
       code_403: Bu kaynağa erişim için yetkiniz yoktur.
@@ -2823,6 +2840,10 @@ tr:
       multipart_body_error: İstek gövdesi, beklenen çok parçalı parçaları içeriyordu.
       multiple_errors: Çoklu alan kısıtlamaları ihlal edilmiştir.
       unable_to_create_attachment: Ek oluşturulamadı
+      unable_to_create_attachment_permissions: 'Dosya sistemi izinlerinin eksik olması
+        nedeniyle ek kaydedilemedi
+
+'
       render:
         context_not_parsable: Sağlanan bağlam, bir kaynağa bağ değildir.
         unsupported_context: Verilen kaynak bağlam olarak desteklenmiyor.

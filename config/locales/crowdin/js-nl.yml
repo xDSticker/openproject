@@ -18,12 +18,6 @@ nl:
     close_popup_title: Popup sluiten
     close_filter_title: Sluit filter
     close_form_title: Sluit formulier
-    boards:
-      upsale:
-        boards: Wilt u vrij de structuur van uw werk in een weergave op een bord?
-        check_out_link: Bekijk de Enterprise Edition.
-      lists:
-        delete: Delete list
     card:
       add_new: Nieuwe kaart toevoegen
       highlighting:
@@ -72,7 +66,7 @@ nl:
       too_many: Er zijn meer werkpakketten (%{count}) dan kunnen worden weergegeven
         op de kalender (%{max}). Voeg filters te concentreren op de relevante items.
     description_available_columns: Beschikbare kolommen
-    description_current_position: 'U bent hier:'
+    description_current_position: 'You are here: '
     description_select_work_package: 'Selecteer werk pakket #%{id}'
     description_selected_columns: Geselecteerde kolommen
     description_subwork_package: 'Kind van werkpakket #%{id}'
@@ -189,6 +183,17 @@ nl:
           title: Werkpakketten
         work_packages_calendar:
           title: Agenda
+    homescreen:
+      blocks:
+        new_features:
+          text_new_features: Read about new features and product updates.
+          current_new_feature_html: 'OpenProject contains a new <b>Boards view</b>
+            for Agile project management. </br> To activate this new feature for your
+            existing projects, please do the following steps: <ul><li>Activate the
+            module Boards within existing projects'' settings.</li> <li>Configure
+            your Boards in a project.</li> <li>Verify roles and permissions</li></ul>'
+          image_alt_text: Board teaser image
+          learn_about: Learn more about Agile Boards
     label_activate: Activeren
     label_activity_no: Activiteit ingangsnummer %{activityNo}
     label_activity_with_comment_no: Activiteit ingangsnummer %{activityNo}. Bevat
@@ -215,6 +220,7 @@ nl:
     label_board_locked: Vergrendeld
     label_board_plural: Borden
     label_board_sticky: Sticky
+    label_create: Maken
     label_create_work_package: Nieuw werkpakket maken
     label_created_by: Gemaakt door
     label_date: Datum
@@ -420,8 +426,11 @@ nl:
       selection: Gelieve te selecteren
       relation_description: Klik om een beschrijving voor deze relatie toe te voegen
     project:
-      required_outside_context: U bent niet in de context van een project. Kies de
-        context van het project eerst om te selecteren op type en status
+      required_outside_context: 'Please choose a project to create the work package
+        in to see all attributes. You can only select projects which have the type
+        above activated.
+
+'
       context: Context van het project
       work_package_belongs_to: Dit werkpakket behoort tot project %{projectname}.
       click_to_switch_context: Open dit werkpakket in dat project.
@@ -512,9 +521,8 @@ nl:
       save: Sla relatie op
       abort: Annuleren
     relations_autocomplete:
-      placeholder: Geef het verwante werkpakket-id in
-      parent_placeholder: Kies nieuw bovenliggend, druk op enter om los te koppelen,
-        escape om te annuleren.
+      placeholder: Type to search
+      parent_placeholder: Choose new parent or press escape to cancel.
     repositories:
       select_tag: Selecteer label
       select_branch: Selecteer pad

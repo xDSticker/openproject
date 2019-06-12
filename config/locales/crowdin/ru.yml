@@ -111,16 +111,18 @@ ru:
     single: или
   deprecations:
     old_timeline:
-      replacement: Этот модуль графиков заменяется интерактивным графиком, который
-        встроен в модуль комплекса работ.
-      removal: Этот модуль будет удален в OpenProject 8.0. Настройки данного представления
-        НЕВОЗМОЖНО перенести в представление комплекса работ.
-      further_information_before: Смотрите также
-      link_name: переход на новый график.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Пожалуйста, обратите внимание: Этот модуль собираются удалить в OpenProject
-        8.0.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -425,6 +427,7 @@ ru:
         spent_on: Дата
         type: Тип
       type:
+        description: Текст для описания по умолчанию
         attribute_groups: ''
         is_in_roadmap: По умолчанию отображается в дорожной карте
         is_default: В новых проектах активируется по умолчанию
@@ -518,7 +521,7 @@ ru:
         not_a_date: не является допустимой датой.
         not_a_datetime: дата и время не являются допустимыми.
         not_a_number: не является числом.
-        not_allowed: неверно ввиду отсутствия прав.
+        not_allowed: неверно, ввиду отсутствия прав.
         not_an_integer: не является целым числом.
         not_an_iso_date: 'недопустимая дата. Требуемый формат: гггг-мм-дд.'
         not_same_project: не принадлежит тому же проекту.
@@ -599,6 +602,9 @@ ru:
           invalid_url: не допустимый URL или путь к репозиторию.
           must_not_be_ssh: не должно быть URL-адресом SSH.
           no_directory: не является каталогом.
+        role:
+          permissions:
+            dependency_missing: включите также '%{dependency}', так как выбрано '%{permission}'.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Пакет работ #%{id} не допустимым
             для переназначения времени записи.'
@@ -671,7 +677,15 @@ ru:
         member:
           principal_blank: Пожалуйста, выберите по крайней мере одного пользователя
             или группу.
-          role_blank: Пожалуйста, выберите по крайней мере одну роль.
+          role_blank: требуется назначить.
+          attributes:
+            roles:
+              ungrantable: имеет неназначаемую роль.
+            principal:
+              unassignable: не может быть присвоен проекту.
+        version:
+          undeletable_work_packages_attached: Версия не может быть удалена, так как
+            имеет пакеты работ, прикрепленные к ней.
       template:
         body: 'Пожалуйста, проверьте следующие поля:'
         header:
@@ -855,6 +869,7 @@ ru:
       началось. Вы будете проинформированы по электронной почте, как только «%{target_project_name}»
       будет доступен.
     failed: Не удается скопировать проект %{source_project_name}
+    failed_internal: Копирование не удалось из-за внутренней ошибки.
     succeeded: Созданный проект %{target_project_name}
     errors: Ошибка
     project_custom_fields: Настраиваемые поля проекта
@@ -1045,7 +1060,7 @@ ru:
   description_choose_project: Проекты
   description_compare_from: Сравнить от
   description_compare_to: Сравнить до
-  description_current_position: 'Вы находитесь здесь:'
+  description_current_position: 'Вы здесь: '
   description_date_from: Введите дату начала
   description_date_range_interval: Задайте диапазон, указав дату начала и окончания
   description_date_range_list: Выберите диапазон из списка
@@ -1101,11 +1116,11 @@ ru:
   error_cookie_missing: Отсутствуют cookie OpenProject. Пожалуйста, убедитесь, что
     Cookie разрешены. Без них приложение не будет функционировать должным образом.
   error_custom_option_not_found: Параметр не существует.
-  error_dependent_work_package: 'Ошибка в зависимостях пакетов работ #%{related_id}
-    %{related_subject}: %{error}'
   error_enterprise_activation_user_limit: Ваша учетная запись не может быть активирована
     (достигнут предел пользователя). Обратитесь к администратору для получения доступа.
   error_failed_to_delete_entry: Не удалось удалить эту запись.
+  error_in_dependent: 'Ошибка при попытке изменить зависимый объект: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Выбранное значение недопустимо.
   error_invalid_group_by: 'Невозможно группировать по: %{value}'
   error_invalid_query_column: 'Недопустимый столбец в запросе: %{value}'
@@ -1490,6 +1505,7 @@ ru:
   label_max_size: Максимальный размер
   label_me: мне
   label_member_new: Новый участник
+  label_member_all_admin: "(Все роли из-за статуса администратора)"
   label_member_plural: Участники
   label_view_all_members: Просмотреть всех участников
   label_menu_item_name: Название пункта меню
@@ -1518,6 +1534,7 @@ ru:
   label_my_queries: Мои пользовательские запросы
   label_never: Никогда
   label_new: Новое
+  label_new_features: Новые особенности
   label_new_statuses_allowed: Новые статусы разрешены
   label_news_added: Новость добавлена
   label_news_comment_added: Комментарий добавлен в Новости
@@ -1966,7 +1983,6 @@ ru:
   notice_to_many_principals_to_display: Слишком много результатов. Сузьте поиск, введя
     имя нового участника (или группы).
   notice_unable_delete_time_entry: Не удается удалить учетную запись о времени.
-  notice_unable_delete_version: Не удается удалить этап.
   notice_user_missing_authentication_method: Пользователь еще не выбрал пароль или
     другой способ авторизации.
   notice_user_invitation_resent: Приглашение было отправлено на %{email}.
@@ -2016,6 +2032,7 @@ ru:
   permission_add_project: Создать проект
   permission_add_subprojects: Создать подпроект
   permission_add_work_package_watchers: Добавить наблюдателей
+  permission_assign_versions: Назначить версии
   permission_browse_repository: Возможность только чтения из репозитория (просмотр
     и проверка)
   permission_change_wiki_parent_page: Смена родительской wiki-страницы
@@ -2845,12 +2862,9 @@ ru:
   menu_item: Пункт меню
   menu_item_setting: Видимость
   mysql_deprecation:
-    notice: 'Будущие версии OpenProject, скорее всего, сократят или сократят поддержку
-      баз данных MySQL и MariaDB. Ваша установка все еще работает на MySQL, и мы предлагаем
-      вам перенести вашу установку на PostgreSQL. Этот процесс легко при следовании
-      нашим инструкциям по миграции:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Пункт меню для wiki-страницы  «%{title}»
   wiki_menu_item_setting: Видимость
   wiki_menu_item_new_main_item_explanation: 'Вы удалили только элемент главного меню
@@ -2875,6 +2889,7 @@ ru:
     attributes:
       lock_version: Блокировать этап
     errors:
+      code_400: 'Неверный запрос: %{message}'
       code_401: Вам нужно пройти проверку подлинности для доступа к этому ресурсу.
       code_401_wrong_credentials: Вы не ввели правильные учетные данные.
       code_403: Вы не авторизованы для доступа к этому ресурсу.
@@ -2901,6 +2916,8 @@ ru:
       multipart_body_error: Тело запроса не содержит ожидаемых частей.
       multiple_errors: Для нескольких полей были нарушены ограничения.
       unable_to_create_attachment: Вложение не может быть создано
+      unable_to_create_attachment_permissions: Вложение не может быть сохранено из-за
+        отсутствия прав на файловую систему
       render:
         context_not_parsable: Предоставленного контекста не является ссылка на ресурс.
         unsupported_context: Ресурс не поддерживается как контекст.

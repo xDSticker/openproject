@@ -18,12 +18,6 @@ ro:
     close_popup_title: Închidere pop-up
     close_filter_title: Închide filtrul
     close_form_title: Închide formularul
-    boards:
-      upsale:
-        boards: Need to freely structure your work in a board view?
-        check_out_link: Check out the Enterprise Edition.
-      lists:
-        delete: Delete list
     card:
       add_new: Add new card
       highlighting:
@@ -72,7 +66,7 @@ ro:
       too_many: There are more work packages (%{count}) than can be displayed by the
         calendar (%{max}). Add filters to focus on the relevant ones.
     description_available_columns: Coloane disponibile
-    description_current_position: 'Sunteți aici:'
+    description_current_position: 'You are here: '
     description_select_work_package: 'Selectaţi pachetul de lucru #%{id}'
     description_selected_columns: Coloane selectate
     description_subwork_package: 'Fiu al pachetului de lucru #%{id}'
@@ -188,6 +182,17 @@ ro:
           title: Pachete de lucru
         work_packages_calendar:
           title: Calendar
+    homescreen:
+      blocks:
+        new_features:
+          text_new_features: Read about new features and product updates.
+          current_new_feature_html: 'OpenProject contains a new <b>Boards view</b>
+            for Agile project management. </br> To activate this new feature for your
+            existing projects, please do the following steps: <ul><li>Activate the
+            module Boards within existing projects'' settings.</li> <li>Configure
+            your Boards in a project.</li> <li>Verify roles and permissions</li></ul>'
+          image_alt_text: Board teaser image
+          learn_about: Learn more about Agile Boards
     label_activate: Activare
     label_activity_no: Acțiunea cu numărul %{activityNo}
     label_activity_with_comment_no: Acțiunea cu numărul %{activityNo}. Are un comentariu
@@ -213,6 +218,7 @@ ro:
     label_board_locked: Închis
     label_board_plural: Boards
     label_board_sticky: Lipicios
+    label_create: Creare
     label_create_work_package: Creare pachet de lucru nou
     label_created_by: Creat de
     label_date: Dată
@@ -416,8 +422,11 @@ ro:
       selection: Vă rugăm să selectaţi
       relation_description: Click pentru a adauga o descriere pentru această relaţie
     project:
-      required_outside_context: You are not within a project context. Please choose
-        the project context first in order to select type and status
+      required_outside_context: 'Please choose a project to create the work package
+        in to see all attributes. You can only select projects which have the type
+        above activated.
+
+'
       context: Project context
       work_package_belongs_to: Acest pachet de lucru face parte din proiectul %{projectname}.
       click_to_switch_context: Deschide pachetul de lucru din acel proiect.
@@ -507,8 +516,8 @@ ro:
       save: Salvează relația
       abort: Anulează
     relations_autocomplete:
-      placeholder: Introduceţi ID-ul packetului de lucru
-      parent_placeholder: Choose new parent, press enter to unset, escape to cancel.
+      placeholder: Type to search
+      parent_placeholder: Choose new parent or press escape to cancel.
     repositories:
       select_tag: Selectare etichetă
       select_branch: Selectare ramură

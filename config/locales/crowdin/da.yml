@@ -122,6 +122,9 @@ da:
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -424,6 +427,7 @@ da:
         spent_on: Dato
         type: Type
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -596,6 +600,10 @@ da:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: er ikke et katalog.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Arbejdspakke # %{id} er ikke et
             gyldig mål for tildeling af tider.'
@@ -658,7 +666,15 @@ da:
               error_not_found: not found
         member:
           principal_blank: Vælg venligst mindst én bruger eller gruppe.
-          role_blank: Vælg venligst mindst én rolle.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Kontroller venligst følgende felter:'
         header:
@@ -838,6 +854,7 @@ da:
     started: Started to copy project "%{source_project_name}" to "%{target_project_name}".
       You will be informed by mail as soon as "%{target_project_name}" is available.
     failed: Kan ikke kopiere projektet %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Oprettet projektet %{target_project_name}
     errors: Fejl
     project_custom_fields: Custom fields on project
@@ -1005,7 +1022,7 @@ da:
   description_choose_project: Projekter
   description_compare_from: Sammenlign fra
   description_compare_to: Sammenlign med
-  description_current_position: 'Du er her:'
+  description_current_position: 'You are here: '
   description_date_from: Indtast startdato
   description_date_range_interval: Fastsæt interval ved at vælge start- og slutdato
   description_date_range_list: Fastsæt interval fra liste
@@ -1058,11 +1075,11 @@ da:
   error_cookie_missing: The OpenProject cookie is missing. Please ensure that cookies
     are enabled, as this application will not properly function without.
   error_custom_option_not_found: Option does not exist.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1444,6 +1461,7 @@ da:
   label_max_size: Maksimal størrelse
   label_me: mig
   label_member_new: Nyt medlem
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Medlemmer
   label_view_all_members: Vis alle medlemmer
   label_menu_item_name: Navn på menupunkt
@@ -1472,6 +1490,7 @@ da:
   label_my_queries: Mine selvvalgte forespørgsler
   label_never: Aldrig
   label_new: Ny
+  label_new_features: New features
   label_new_statuses_allowed: Nye statuser tilladt
   label_news_added: Nyheder tilføjet
   label_news_comment_added: Kommentar tilføjet til en nyhed
@@ -1902,7 +1921,6 @@ da:
     Der er for mange resultater.
     Indsnævr søgningen ved at indtste navnet på det nye medlem (eller gruppe).
   notice_unable_delete_time_entry: Ude af stand til at slette tidsregistrering.
-  notice_unable_delete_version: Ude af stand til at slette versionen.
   notice_user_missing_authentication_method: User has yet to choose a password or
     another way to sign in.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1950,6 +1968,7 @@ da:
   permission_add_project: Opret projekt
   permission_add_subprojects: Opret underprojekter
   permission_add_work_package_watchers: Tilføj tilsynsførende
+  permission_assign_versions: Assign versions
   permission_browse_repository: Read-only access to repository (browse and checkout)
   permission_change_wiki_parent_page: Skift overordnet wiki-side
   permission_comment_news: Kommenter nyheder
@@ -2757,12 +2776,9 @@ da:
   menu_item: Menupunkt
   menu_item_setting: Synlighed
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Menupunkt for wikipage "%{title}"
   wiki_menu_item_setting: Synlighed
   wiki_menu_item_new_main_item_explanation: 'Du er ved at slette det eneste overordnede
@@ -2787,6 +2803,7 @@ da:
     attributes:
       lock_version: Lås version
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Du skal være logget ind for at få adgang til denne ressource.
       code_401_wrong_credentials: Du har ikke givet korrekte loginoplysninger.
       code_403: Du har ikke tilladelse til at få adgang til denne ressource.
@@ -2813,6 +2830,8 @@ da:
       multipart_body_error: Forespørgslen indeholdt ikke de forventede opdelte oplysninger.
       multiple_errors: Flere begrænsninger for feltet er overtrådt.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: Den anviste sammenhæng er ikke et link til en ressource.
         unsupported_context: Den givne ressource understøttes ikke som korrekt sammenhæng.

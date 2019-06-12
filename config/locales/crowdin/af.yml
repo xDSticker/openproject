@@ -122,6 +122,9 @@ af:
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -425,6 +428,7 @@ af:
         spent_on: Datum
         type: Soort
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -597,6 +601,10 @@ af:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: is not a directory.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Werkspakket #%{id} is nie ''n geldige
             teiken vir hertoewysing van die tyd inskrywings nie.'
@@ -660,7 +668,15 @@ af:
               error_not_found: not found
         member:
           principal_blank: Kies asseblief ten minste een gebruiker of groep.
-          role_blank: Kies asseblief ten minste een rol.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Kontroleer asseblief die volgende velde:'
         header:
@@ -841,6 +857,7 @@ af:
       begin. Jy sal deur epos in kennis gestel word sodra "%{target_project_name}"
       beskikbaar is.
     failed: Kan nie projek %{source_project_name} kopieer nie
+    failed_internal: Copying failed due to an internal error.
     succeeded: Projek %{target_project_name} geskep
     errors: Fout
     project_custom_fields: Custom fields on project
@@ -1007,7 +1024,7 @@ af:
   description_choose_project: Projekte
   description_compare_from: Compare from
   description_compare_to: Compare to
-  description_current_position: 'Jy is hier:'
+  description_current_position: 'You are here: '
   description_date_from: Tik begindatum
   description_date_range_interval: Kies reeks deur die begin- en einddatum kies
   description_date_range_list: Kies reeks uit die lys
@@ -1062,11 +1079,11 @@ af:
     koekies geaktiveer is, aangesien hierdie toepassing nie behoorlik sal funksioneer
     daarsonder nie.
   error_custom_option_not_found: Option does not exist.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1452,6 +1469,7 @@ af:
   label_max_size: Maksimum grootte
   label_me: ek
   label_member_new: Nuwe lid
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Lede
   label_view_all_members: View all members
   label_menu_item_name: Naam van kieslysitem
@@ -1480,6 +1498,7 @@ af:
   label_my_queries: My pasgemaakte navrae
   label_never: Never
   label_new: Nuut
+  label_new_features: New features
   label_new_statuses_allowed: Nuwe statusse toegelaat
   label_news_added: Nuus bygevoeg
   label_news_comment_added: Kommentaar bygevoeg by nuus
@@ -1911,7 +1930,6 @@ af:
     There are too many results.
     Narrow down the search by typing in the name of the new member (or group).
   notice_unable_delete_time_entry: Unable to delete time log entry.
-  notice_unable_delete_version: Unable to delete version.
   notice_user_missing_authentication_method: User has yet to choose a password or
     another way to sign in.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1959,6 +1977,7 @@ af:
   permission_add_project: Create project
   permission_add_subprojects: Create subprojects
   permission_add_work_package_watchers: Voeg dophouers by
+  permission_assign_versions: Assign versions
   permission_browse_repository: Read-only access to repository (browse and checkout)
   permission_change_wiki_parent_page: Change parent wiki page
   permission_comment_news: Comment news
@@ -2765,12 +2784,9 @@ af:
   menu_item: Menu item
   menu_item_setting: Sigbaarheid
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Kieslysitem vir wikibladsy "%{title}"
   wiki_menu_item_setting: Sigbaarheid
   wiki_menu_item_new_main_item_explanation: 'Jy is besig om die enigste hoof wiki-kieslysitem
@@ -2795,6 +2811,7 @@ af:
     attributes:
       lock_version: Slot Weergawe
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Jy moet gewaarmerk wees om toegang tot hierdie hulpbron te verkry.
       code_401_wrong_credentials: Jy het nie die korrekte verwysings voorsien nie.
       code_403: Jy is nie gemagtig om toegang tot hierdie hulpbron verkry nie.
@@ -2822,6 +2839,8 @@ af:
         bevat nie.
       multiple_errors: Verskeie veld beperkinge is oortree.
       unable_to_create_attachment: Die aanhangsel kon nie geskep word nie
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: Die konteks voorsien is nie 'n skakel na 'n hulpbron
           nie.

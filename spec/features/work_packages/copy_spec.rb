@@ -47,7 +47,8 @@ RSpec.feature 'Work package copy', js: true, selenium: true do
                       permissions: %i[view_work_packages
                                       add_work_packages
                                       manage_work_package_relations
-                                      edit_work_packages])
+                                      edit_work_packages
+                                      assign_versions])
   end
   let(:type) { FactoryBot.create(:type) }
   let(:project) { FactoryBot.create(:project, types: [type]) }
@@ -117,8 +118,8 @@ RSpec.feature 'Work package copy', js: true, selenium: true do
                                         Description: 'Copied WP Description',
                                         Version: original_work_package.fixed_version,
                                         Priority: original_work_package.priority,
-                                        Assignee: original_work_package.assigned_to,
-                                        Responsible: original_work_package.responsible
+                                        Assignee: original_work_package.assigned_to.name,
+                                        Responsible: original_work_package.responsible.name
 
     work_package_page.expect_activity user, number: 1
     work_package_page.expect_current_path

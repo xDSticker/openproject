@@ -19,13 +19,6 @@ pt-BR:
     close_popup_title: Fechar pop-up
     close_filter_title: Fechar filtro
     close_form_title: Fechar formulário
-    boards:
-      upsale:
-        boards: Precisa estruturar livremente seu trabalho em uma visualização de
-          quadro?
-        check_out_link: Confira a versão Enterprise Edition.
-      lists:
-        delete: Excluir lista
     card:
       add_new: Adicionar novo cartão
       highlighting:
@@ -74,7 +67,7 @@ pt-BR:
       too_many: Existem mais pacotes de trabalho (%{count}) do que podem ser exibidos
         pelo calendário (%{max}). Adicione filtros para exibir os relevantes.
     description_available_columns: Colunas disponíveis
-    description_current_position: 'Você está aqui:'
+    description_current_position: 'Você está aqui: '
     description_select_work_package: 'Selecionar o pacote de trabalho #%{id}'
     description_selected_columns: Colunas selecionadas
     description_subwork_package: 'Filho do pacote de trabalho #%{id}'
@@ -192,6 +185,18 @@ pt-BR:
           title: Pacotes de trabalho
         work_packages_calendar:
           title: Calendário
+    homescreen:
+      blocks:
+        new_features:
+          text_new_features: Ler sobre os novos recursos e atualizações de produtos.
+          current_new_feature_html: 'O OpenProject contém uma nova <b>visualização
+            de Quadros</b> para gestão de projetos Agile. </br> Para ativar este novo
+            recurso em seus projetos existentes, por favor, siga as seguintes etapas:
+            <ul><li>Ative os Quadros de módulo dentro das configurações dos projetos
+            existentes.</li> <li>Configure os seus Quadros em um projeto.</li> <li>Verifique
+            as funções e permissões</li></ul>'
+          image_alt_text: Imagem teaser do Quadro
+          learn_about: Saiba mais sobre os Quadros Agile
     label_activate: Ativar
     label_activity_no: Número da atividade %{activityNo}
     label_activity_with_comment_no: Atividade número %{activityNo}. Tem um comentário
@@ -217,6 +222,7 @@ pt-BR:
     label_board_locked: Bloqueado
     label_board_plural: Quadros
     label_board_sticky: Afixado
+    label_create: Criar
     label_create_work_package: Criar novo pacote de trabalho
     label_created_by: Criado por
     label_date: Data
@@ -425,8 +431,11 @@ pt-BR:
       selection: Por favor selecione
       relation_description: Clique para adicionar a descrição para esta relação
     project:
-      required_outside_context: Você não está dentro de um contexto de projeto. Por
-        favor, escolha o contexto do projeto a fim de selecionar o tipo e a situação
+      required_outside_context: 'Por favor, escolha o projeto onde vai criar o pacote
+        de trabalho para visualizar todos os atributos. Você só pode selecionar projetos
+        que possuam o tipo acima ativado.
+
+'
       context: Contexto do projeto
       work_package_belongs_to: Este pacote de trabalho pertence ao projeto %{projectname}.
       click_to_switch_context: Abra esse pacote de trabalho nesse projeto.
@@ -516,9 +525,8 @@ pt-BR:
       save: Salvar relação
       abort: Abortar
     relations_autocomplete:
-      placeholder: Insira o id do pacote de trabalho relacionado
-      parent_placeholder: Escolher novo pai, pressione enter para desativar, esc para
-        cancelar.
+      placeholder: Digite para pesquisar
+      parent_placeholder: Escolha o novo principal ou pressione esc para cancelar.
     repositories:
       select_tag: Selecionar marca
       select_branch: Selecionar o branch

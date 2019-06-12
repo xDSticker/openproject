@@ -18,12 +18,6 @@ bg:
     close_popup_title: Затвори изкачащият прозорец
     close_filter_title: Close filter
     close_form_title: Close form
-    boards:
-      upsale:
-        boards: Need to freely structure your work in a board view?
-        check_out_link: Check out the Enterprise Edition.
-      lists:
-        delete: Delete list
     card:
       add_new: Add new card
       highlighting:
@@ -72,7 +66,7 @@ bg:
       too_many: There are more work packages (%{count}) than can be displayed by the
         calendar (%{max}). Add filters to focus on the relevant ones.
     description_available_columns: Достъпни колони
-    description_current_position: 'Вие сте тук:'
+    description_current_position: 'You are here: '
     description_select_work_package: 'Избери работен пакет #%{id}'
     description_selected_columns: Избрани колони
     description_subwork_package: 'Подработен пакет #%{id}'
@@ -186,6 +180,17 @@ bg:
           title: Работни пакети
         work_packages_calendar:
           title: Календар
+    homescreen:
+      blocks:
+        new_features:
+          text_new_features: Read about new features and product updates.
+          current_new_feature_html: 'OpenProject contains a new <b>Boards view</b>
+            for Agile project management. </br> To activate this new feature for your
+            existing projects, please do the following steps: <ul><li>Activate the
+            module Boards within existing projects'' settings.</li> <li>Configure
+            your Boards in a project.</li> <li>Verify roles and permissions</li></ul>'
+          image_alt_text: Board teaser image
+          learn_about: Learn more about Agile Boards
     label_activate: Activate
     label_activity_no: Дейност запис номер %{activityNo}
     label_activity_with_comment_no: Дейност запис номер %{activityNo}. Има коментар
@@ -211,6 +216,7 @@ bg:
     label_board_locked: Заключен
     label_board_plural: Boards
     label_board_sticky: Лепкава
+    label_create: Създаване
     label_create_work_package: Създаване на нов работен пакет
     label_created_by: Created by
     label_date: Дата
@@ -412,8 +418,11 @@ bg:
       selection: Моля изберете
       relation_description: Click to add description for this relation
     project:
-      required_outside_context: You are not within a project context. Please choose
-        the project context first in order to select type and status
+      required_outside_context: 'Please choose a project to create the work package
+        in to see all attributes. You can only select projects which have the type
+        above activated.
+
+'
       context: Project context
       work_package_belongs_to: This work package belongs to project %{projectname}.
       click_to_switch_context: Open this work package in that project.
@@ -503,8 +512,8 @@ bg:
       save: Save relation
       abort: Abort
     relations_autocomplete:
-      placeholder: Enter the related work package id
-      parent_placeholder: Choose new parent, press enter to unset, escape to cancel.
+      placeholder: Type to search
+      parent_placeholder: Choose new parent or press escape to cancel.
     repositories:
       select_tag: Изберете етикет
       select_branch: Изберете клон

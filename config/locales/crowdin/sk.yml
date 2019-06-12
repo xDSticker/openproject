@@ -112,15 +112,18 @@ sk:
     single: alebo
   deprecations:
     old_timeline:
-      replacement: Tento modul časovej osi bude nahradený interaktívnym zobrazením
-        časovej osi, ktorá bude zahrnutá do modulu pracovného balíčka.
-      removal: Tento modul je sa odstráni z Open Project 8.0 konfigurácia pre toto
-        zobrazenie nebude migrovaná do zobrazenia pracovného balíčka.
-      further_information_before: Prosím, pozrite sa na
-      link_name: ako prejsť na novú časovú os.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Upozornenie: Tento modul bude odstránený vo verzií OpenProject 8.0.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -430,6 +433,7 @@ sk:
         spent_on: Dátum
         type: Typ
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Zobraziť v Roadmap štandardne
         is_default: Aktivované pre nové projekty štandardne
@@ -607,6 +611,10 @@ sk:
           invalid_url: nie je platná adresa URL alebo cesta k úložisku.
           must_not_be_ssh: nesmie byť SSH URL.
           no_directory: nie je adresár.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Pracovný balík #%{id} nepredstavuje
             platný cieľ pre pridelené položky času.'
@@ -677,7 +685,15 @@ sk:
               error_not_found: nenájdené
         member:
           principal_blank: Vyberte aspoň jedného používateľa alebo skupinu.
-          role_blank: Vyberte aspoň jednu rolu.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Skontrolujte nasledujúce polia:'
         header:
@@ -860,6 +876,7 @@ sk:
     started: Začalo sa kopírovanie projektu "%{source_project_name}" do projektu "%{target_project_name}".
       Budete informovaní mailom hneď ako bude "%{target_project_name}" k dispozícii.
     failed: Nie je možné kopírovať projekt %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Projekt %{target_project_name} bol vytvorený
     errors: Chyba
     project_custom_fields: Vlastné polia projektu
@@ -1052,7 +1069,7 @@ sk:
   description_choose_project: Projekty
   description_compare_from: Porovnať od
   description_compare_to: Porovnať s
-  description_current_position: 'Nachádzate sa tu:'
+  description_current_position: 'You are here: '
   description_date_from: Zadajte počiatočný dátum
   description_date_range_interval: Vybrať rozsah zvolením počiatočného a koncového
     dátumu
@@ -1109,11 +1126,11 @@ sk:
   error_cookie_missing: Chýbajú súbory cookie pre OpenProject. Skontrolujte, či sú
     povolené súbory cookie, nakoľko bez nich táto aplikácia nebude správne fungovať.
   error_custom_option_not_found: Nastavenie neexistuje.
-  error_dependent_work_package: 'Chyba v závislosti pracovného balíčka #%{related_id}
-    %{related_subject}: %{error}'
   error_enterprise_activation_user_limit: Váš účet nemôže byť aktivovaný (dosiahnutý
     limit počtu užívateľov). Prosím kontaktujte vášho správcu pre získanie prístupu.
   error_failed_to_delete_entry: Chyba pri odstraňovaní tejto položky.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Vybratá neplatná hodnota.
   error_invalid_group_by: 'Nie je možné zoskupiť podľa: %{value}'
   error_invalid_query_column: 'Nesprávny filter pre stĺpec: %{value}'
@@ -1496,6 +1513,7 @@ sk:
   label_max_size: Maximálna veľkosť
   label_me: mňa
   label_member_new: Nový člen
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Členovia
   label_view_all_members: Zobraziť všetkých členov
   label_menu_item_name: Názov položky ponuky
@@ -1524,6 +1542,7 @@ sk:
   label_my_queries: Moje vlastné dopyty
   label_never: Nikdy
   label_new: Nový
+  label_new_features: New features
   label_new_statuses_allowed: Nové stavy povolené
   label_news_added: Novinky pridané
   label_news_comment_added: Komentár pridaný do Novinky
@@ -1973,7 +1992,6 @@ sk:
     Existuje príliš veľa výsledkov.
     Upresnite vyhľadávanie zadaním názvu nového člena (alebo skupiny).
   notice_unable_delete_time_entry: Položka sledovania času sa nedala odstrániť.
-  notice_unable_delete_version: Verzia nemôže byť zmazaná.
   notice_user_missing_authentication_method: Užívateľ si ešte nevybral heslo alebo
     iný spôsob, ako sa prihlásiť.
   notice_user_invitation_resent: Pozvánka bola odoslaná na %{email}.
@@ -2023,6 +2041,7 @@ sk:
   permission_add_project: Vytvoriť projekt
   permission_add_subprojects: Vytvoriť podprojekty
   permission_add_work_package_watchers: Pridať pozorovateľov
+  permission_assign_versions: Assign versions
   permission_browse_repository: Prístup do úložiska iba na čítanie (prehliadanie a
     kontrola)
   permission_change_wiki_parent_page: Zmeniť nadradenú wiki stránku
@@ -2840,12 +2859,9 @@ sk:
   menu_item: Položka menu
   menu_item_setting: Viditeľnosť
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Položka menu pre wiki "%{title}"
   wiki_menu_item_setting: Viditeľnosť
   wiki_menu_item_new_main_item_explanation: 'Zmažete iba hlavnú položku menu wiki.
@@ -2869,6 +2885,7 @@ sk:
     attributes:
       lock_version: Uzamknúť verziu
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Pre prístup k tomuto prostriedku musíte byť autentifikovaný.
       code_401_wrong_credentials: Neposkytli ste správne prihlasovacie údaje.
       code_403: Nemáte oprávnenie na prístup k tomuto prostriedku.
@@ -2895,6 +2912,8 @@ sk:
       multipart_body_error: Telo žiadosti neobsahuje očakávaný viacnásobné časti.
       multiple_errors: Boli porušené obmedzenia voči viacerým poliam.
       unable_to_create_attachment: Prílohu sa nepodarilo vytvoriť
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: Zadaný kontext nie je odkazom na prostriedok.
         unsupported_context: Zadaný prostriedok nie je podporovaný ako kontext.

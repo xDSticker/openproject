@@ -175,6 +175,7 @@ module API
                           true,
                           false,
                           true,
+                          :filters,
                           :filters
 
           schema_with_allowed_collection :group_by,
@@ -256,7 +257,10 @@ module API
           end
 
           def filters_schemas
-            filters = represented.available_filters
+            # TODO: The RelatableFilter is not supported by the schema depdendencies yet
+            filters = represented
+                      .available_filters
+                      .reject { |f| f.is_a?(::Queries::WorkPackages::Filter::RelatableFilter) }
 
             QueryFilterInstanceSchemaCollectionRepresenter.new(filters,
                                                                filter_instance_schemas_href,

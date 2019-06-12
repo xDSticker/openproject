@@ -113,15 +113,18 @@ pt-BR:
     single: ou
   deprecations:
     old_timeline:
-      replacement: Este módulo de cronogramas está sendo substituído por um cronograma
-        interativo integrado no módulo de pacotes de trabalho.
-      removal: Este módulo será removido no OpenProject 8.0. A configuração para este
-        modo de exibição NÃO migrará para a visualização de pacotes de trabalho.
-      further_information_before: Por favor, dê uma olhada em
-      link_name: como migrar para um novo cronograma (linha do tempo).
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Atenção: Este módulo será removido com o OpenProject 8.0.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -427,6 +430,7 @@ pt-BR:
         spent_on: Data
         type: Tipo
       type:
+        description: Texto padrão para descrição
         attribute_groups: ''
         is_in_roadmap: Exibido no planejamento como padrão
         is_default: Ativado para novos projetos por padrão
@@ -600,6 +604,10 @@ pt-BR:
           invalid_url: não é um caminho ou URL válida do repositório.
           must_not_be_ssh: não deve ser uma url SSH.
           no_directory: não é um diretório.
+        role:
+          permissions:
+            dependency_missing: também precisa incluir '%{dependency}', já que '%{permission}'
+              está selecionado.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Pacote de trabalho #%{id} não é
             um alvo válido para re-atribuir os registros de horas gastas.'
@@ -664,7 +672,15 @@ pt-BR:
               error_not_found: não encontrado
         member:
           principal_blank: Por favor, escolha ao menos um usuário ou grupo.
-          role_blank: Por favor, escolha ao menos um papel.
+          role_blank: precisa ser atribuído.
+          attributes:
+            roles:
+              ungrantable: possui uma função não atribuível.
+            principal:
+              unassignable: não pode ser atribuído a um projeto.
+        version:
+          undeletable_work_packages_attached: A versão não pode ser excluída pois
+            tem pacotes de trabalho anexados a ela.
       template:
         body: 'Por favor, verifique os seguintes campos:'
         header:
@@ -845,6 +861,7 @@ pt-BR:
       iniciada. Você será informado por email tão logo "%{target_project_name}" estiver
       disponível.
     failed: Não é possível copiar o projeto %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Foi criado o projeto %{target_project_name}
     errors: Erro
     project_custom_fields: Campos personalizados no projeto
@@ -1012,7 +1029,7 @@ pt-BR:
   description_choose_project: Projetos
   description_compare_from: Comparar de
   description_compare_to: Comparar com
-  description_current_position: 'Você está aqui:'
+  description_current_position: 'Você está aqui: '
   description_date_from: Digite a data de início
   description_date_range_interval: Escolher o intervalo selecionando a data inicial
     e final
@@ -1069,11 +1086,11 @@ pt-BR:
   error_cookie_missing: Está faltando o cookie do OpenProject. Por favor, certifique-se
     de que os cookies estão habilitados, sem os quais esta função não funcionará adequadamente.
   error_custom_option_not_found: A opção não existe.
-  error_dependent_work_package: 'Erro no pacote de trabalho dependente #%{related_id}
-    %{related_subject}: %{error}'
   error_enterprise_activation_user_limit: Sua conta não pôde ser ativada (limite de
     usuários atingido). Por favor, contate o administrador para obter acesso.
   error_failed_to_delete_entry: Falha ao excluir esta entrada.
+  error_in_dependent: 'Erro ao tentar alterar o objeto dependente: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Valor selecionado inválido.
   error_invalid_group_by: 'Não é possível agrupar por: %{value}'
   error_invalid_query_column: 'Coluna de consulta inválida: %{value}'
@@ -1459,6 +1476,7 @@ pt-BR:
   label_max_size: Tamanho máximo
   label_me: eu
   label_member_new: Novo membro
+  label_member_all_admin: "(Todos os papéis devidos ao status de administrador)"
   label_member_plural: Membros
   label_view_all_members: Visualizar todos os membros
   label_menu_item_name: Nome do item de menu
@@ -1487,6 +1505,7 @@ pt-BR:
   label_my_queries: Minhas consultas personalizadas
   label_never: Nunca
   label_new: Novo
+  label_new_features: Novos recursos
   label_new_statuses_allowed: Novas situações permitidas
   label_news_added: Notícia adicionada
   label_news_comment_added: Comentário adicionado a uma notícia
@@ -1925,7 +1944,6 @@ pt-BR:
   notice_to_many_principals_to_display: Existem muitos resultados. Reduza a busca,
     digitando o nome do novo membro (ou grupo).
   notice_unable_delete_time_entry: Não é possível excluir o registro de tempo.
-  notice_unable_delete_version: Não é possível excluir a versão.
   notice_user_missing_authentication_method: Usuário ainda tem que escolher uma senha
     ou outra maneira de acesso.
   notice_user_invitation_resent: Um convite foi enviado para %{email}.
@@ -1973,6 +1991,7 @@ pt-BR:
   permission_add_project: Criar Projeto
   permission_add_subprojects: Criar subprojetos
   permission_add_work_package_watchers: Adicionar observadores
+  permission_assign_versions: Atribuir versões
   permission_browse_repository: Acesso somente leitura ao repositório (browse e check-out)
   permission_change_wiki_parent_page: Alterar filiação da página wiki
   permission_comment_news: Comentar notícias
@@ -2798,12 +2817,9 @@ pt-BR:
   menu_item: Item de menu
   menu_item_setting: Visibilidade
   mysql_deprecation:
-    notice: 'As versões posteriores do OpenProject irão, provavelmente, abandonar
-      ou reduzir o suporte às bases de dados MySQL e MariaDB. Sua instalação continua
-      a ser executada no MySQL e sugerimos que você migre-a para o PostgreSQL. Este
-      processo é fácil quando nossos guias de migração são seguidos:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Item de menu para página wiki "%{title}"
   wiki_menu_item_setting: Visibilidade
   wiki_menu_item_new_main_item_explanation: 'Você está excluindo somente o item de
@@ -2828,6 +2844,7 @@ pt-BR:
     attributes:
       lock_version: Bloquear versão
     errors:
+      code_400: 'Requisição inválida: %{message}'
       code_401: Você precisa estar autenticado para acessar este recurso.
       code_401_wrong_credentials: Você não forneceu as credenciais corretas.
       code_403: Você não está autorizado a acessar este recurso.
@@ -2855,6 +2872,8 @@ pt-BR:
         esperadas.
       multiple_errors: Várias restrições de campo foram violadas.
       unable_to_create_attachment: O anexo não pôde ser criado
+      unable_to_create_attachment_permissions: O anexo não pôde ser salvo devido à
+        falta de permissões do sistema de arquivos
       render:
         context_not_parsable: O contexto fornecido não é um link para o recurso.
         unsupported_context: O recurso dado não esta suportado como contexto.

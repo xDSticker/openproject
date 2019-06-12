@@ -122,6 +122,9 @@ cs:
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -426,6 +429,7 @@ cs:
         spent_on: Datum
         type: Typ
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -598,6 +602,10 @@ cs:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: není adresář.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Pracovní balíček #%{id} není platný
             cíl pro přeřazení časových záznamů.'
@@ -665,7 +673,15 @@ cs:
               error_not_found: nenalezeno
         member:
           principal_blank: Zvolte alespoň jednoho uživatele nebo skupinu.
-          role_blank: Vyberte prosím alespoň jednu roli.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Zkontrolujte, prosím, následující pole:'
         header:
@@ -848,6 +864,7 @@ cs:
     started: Started to copy project "%{source_project_name}" to "%{target_project_name}".
       You will be informed by mail as soon as "%{target_project_name}" is available.
     failed: Nebylo možné zkopírovat projekt "%{source_project_name}"
+    failed_internal: Copying failed due to an internal error.
     succeeded: Projekt "%{target_project_name}" vytvořen
     errors: Chyba
     project_custom_fields: Vlastní pole projektu
@@ -1038,7 +1055,7 @@ cs:
   description_choose_project: Projekty
   description_compare_from: Porovnání z
   description_compare_to: Porovnat s
-  description_current_position: 'Nacházíte se zde:'
+  description_current_position: 'You are here: '
   description_date_from: Zadejte počáteční datum
   description_date_range_interval: Zvolte rozsah výběrem počátečního a koncového data
   description_date_range_list: Vyberte rozsah ze seznamu
@@ -1092,11 +1109,11 @@ cs:
   error_cookie_missing: The OpenProject cookie is missing. Please ensure that cookies
     are enabled, as this application will not properly function without.
   error_custom_option_not_found: Nastavení neexistuje.
-  error_dependent_work_package: 'Chyba v závislém balíčku #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Váš účet nebyl aktivován (dosažen limit
     počtu uživatelů). Prosím obraťte se na správce pro získání přístupu.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1478,6 +1495,7 @@ cs:
   label_max_size: Maximální velikost
   label_me: já
   label_member_new: Nový člen
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Členové
   label_view_all_members: Zobrazit všechny členy
   label_menu_item_name: Název položky menu
@@ -1506,6 +1524,7 @@ cs:
   label_my_queries: Moje vlastní dotazy
   label_never: Nikdy
   label_new: Nové
+  label_new_features: New features
   label_new_statuses_allowed: Nové povolené stavy
   label_news_added: Přidané novinky
   label_news_comment_added: K novince byl přidán komentář
@@ -1950,7 +1969,6 @@ cs:
     There are too many results.
     Narrow down the search by typing in the name of the new member (or group).
   notice_unable_delete_time_entry: Nelze odstranit položku protokolu čas.
-  notice_unable_delete_version: Nelze odstranit verzi.
   notice_user_missing_authentication_method: User has yet to choose a password or
     another way to sign in.
   notice_user_invitation_resent: Pozvánka byla odeslána na %{email}.
@@ -2000,6 +2018,7 @@ cs:
   permission_add_project: Vytvořit projekt
   permission_add_subprojects: Vytvořit podprojekty
   permission_add_work_package_watchers: Přidat sledující
+  permission_assign_versions: Assign versions
   permission_browse_repository: Read-only access to repository (browse and checkout)
   permission_change_wiki_parent_page: Změnit nadřazenou wiki stránku
   permission_comment_news: Komentování novinek
@@ -2813,12 +2832,9 @@ cs:
   menu_item: Položka nabídky
   menu_item_setting: Viditelnost
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Položka nabídky pro stránku wiki "%{title}"
   wiki_menu_item_setting: Viditelnost
   wiki_menu_item_new_main_item_explanation: 'You are deleting the only main wiki menu
@@ -2842,6 +2858,7 @@ cs:
     attributes:
       lock_version: Uzamknout verzi
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Pro přístup k tomuto prostředku musíte být přihlášeni.
       code_401_wrong_credentials: Neposkytli jste správné přihlašovací údaje.
       code_403: Nemáte oprávnění k přístupu k tomuto zdroji.
@@ -2869,6 +2886,8 @@ cs:
         parts.
       multiple_errors: Multiple field constraints have been violated.
       unable_to_create_attachment: Přílohu nelze vytvořit
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: The context provided is not a link to a resource.
         unsupported_context: The resource given is not supported as context.

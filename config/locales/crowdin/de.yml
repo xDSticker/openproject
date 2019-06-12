@@ -115,16 +115,18 @@ de:
     single: oder
   deprecations:
     old_timeline:
-      replacement: Dieses Timelines-Modul wird durch eine interaktive Timelines-Ansicht
-        ersetzt, welche im Arbeitspakete-Modul enthalten sein wird.
-      removal: Dieses Modul wird mit OpenProject 8.0 vollständig entfernt. Die Konfigurationen
-        in dieser Ansicht wird nicht in die Arbeitspaket-Ansicht überführt.
-      further_information_before: Bitte sehen Sie dazu auch
-      link_name: Migration zur neuen Timeline-Ansicht.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Bitte beachten Sie: Dieses Modul wird mit OpenProject 8.0 entfernt
-        werden.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -233,8 +235,8 @@ de:
       query_group_placeholder: Benennen Sie die Tabelle
       reset: Auf Standardwerte zurücksetzen
       type_color_text: |
-        Click to assign or change the color of this type. The selected color distinguishes work packages
-        in Gantt charts. It is therefore recommended to use a strong color.
+        Klicken, um die Farbe dieses Typs zu zuweisen oder zu ändern. Die ausgewählte Farbe unterscheidet Arbeitspakete
+        in Gantt-Diagrammen. Es wird daher empfohlen, eine starke Farbe zu verwenden.
   versions:
     overview:
       no_results_title_text: Derzeit sind keine Arbeitspakete dieser Version zugewiesen.
@@ -437,6 +439,7 @@ de:
         spent_on: Datum
         type: Typ
       type:
+        description: Standardtext für Beschreibung
         attribute_groups: ''
         is_in_roadmap: In Roadmap standardmäßig angezeigt
         is_default: Typ für neue Projekte standardmäßig aktiviert
@@ -620,6 +623,10 @@ de:
           invalid_url: ist keine gültige URL oder Pfad zum Projektarchiv.
           must_not_be_ssh: darf keine SSH-URL sein.
           no_directory: ist kein Verzeichnis.
+        role:
+          permissions:
+            dependency_missing: muss auch '%{dependency}' als '%{permission}' ausgewählt
+              werden.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Arbeitspaket #%{id} ist kein gültiges
             Ziel für die Zuordnung der Zeiterfassungseinträge.'
@@ -654,7 +661,8 @@ de:
           attributes:
             attribute_groups:
               attribute_unknown: Ungültige Arbeitspaket-Attribute verwendet.
-              attribute_unknown_name: 'Invalid work package attribute used: %{attribute}'
+              attribute_unknown_name: 'Ungültige Arbeitspaket-Attribute verwendet:
+                %{attribute}'
               duplicate_group: Der Gruppen-Name %{group} wird mehr als einmal verwendet.
                 Gruppen-Namen müssen eindeutig sein.
               query_invalid: 'Die eingebettete Ansicht ''%{group}'' ist ungültig:
@@ -683,7 +691,15 @@ de:
               error_not_found: nicht gefunden
         member:
           principal_blank: Bitte wählen Sie mindestens einen Benutzer oder eine Gruppe.
-          role_blank: Bitte wählen Sie mindestens eine Rolle.
+          role_blank: muss zugeordnet werden.
+          attributes:
+            roles:
+              ungrantable: hat eine nicht zuweisbare Rolle.
+            principal:
+              unassignable: kann keinem Projekt zugeordnet werden.
+        version:
+          undeletable_work_packages_attached: Die Version kann nicht gelöscht werden,
+            da sie Arbeitspakete enthält, die an sie angeschlossen sind.
       template:
         body: 'Bitte überprüfen Sie die folgenden Felder:'
         header:
@@ -869,6 +885,7 @@ de:
       wurde gestartet. Sie werden per Mail benachrichtigt, sobald "%{target_project_name}"
       zur Verfügung steht.
     failed: Das Projekt %{source_project_name} konnte nicht kopiert werden
+    failed_internal: Copying failed due to an internal error.
     succeeded: Das Projekt %{target_project_name} wurde erstellt
     errors: Fehler
     project_custom_fields: Benutzerdefinierte Felder des Projekts
@@ -1037,7 +1054,7 @@ de:
   description_choose_project: Projekte
   description_compare_from: Vergleiche von
   description_compare_to: Vergleiche mit
-  description_current_position: 'Sie sind hier:'
+  description_current_position: 'Du bist hier: '
   description_date_from: Startdatum eintragen
   description_date_range_interval: Zeitraum durch Start- und Enddatum festlegen
   description_date_range_list: Zeitraum aus einer Liste wählen
@@ -1096,12 +1113,12 @@ de:
     Cookies aktiviert sind, da diese Applikation ohne aktivierte Cookies nicht korrekt
     funktioniert.
   error_custom_option_not_found: Option ist nicht vorhanden.
-  error_dependent_work_package: 'Fehler in abhängigem Arbeitspaket #%{related_id}
-    %{related_subject}: %{error}'
   error_enterprise_activation_user_limit: Ihr Konto konnte nicht aktiviert werden
     (Nutzerlimit erreicht). Bitte kontaktieren Sie Ihren Administrator um Zugriff
     zu erhalten.
   error_failed_to_delete_entry: Fehler beim Löschen dieses Eintrags.
+  error_in_dependent: 'Fehler beim Versuch, abhängiges Objekt zu ändern: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Ausgewählter Wert ist ungültig.
   error_invalid_group_by: 'Kann nicht gruppieren nach: %{value}'
   error_invalid_query_column: 'Ungültige Filter-Spalte: %{value}'
@@ -1211,7 +1228,7 @@ de:
           OpenProject bei.
     links:
       upgrade_enterprise_edition: Auf Enterprise-Edition upgraden
-      postgres_migration: Migrating your installation to PostgreSQL
+      postgres_migration: Migration Ihrer Installation zu PostgreSQL
       user_guides: Benutzerhandbuch
       faq: Häufig gestellte Fragen
       glossary: Glossar
@@ -1489,6 +1506,7 @@ de:
   label_max_size: Maximale Größe
   label_me: ich
   label_member_new: Neues Mitglied
+  label_member_all_admin: "(Alle Rollen, da Administrator)"
   label_member_plural: Mitglieder
   label_view_all_members: Alle Mitglieder anzeigen
   label_menu_item_name: Name des Menüpunktes
@@ -1517,6 +1535,7 @@ de:
   label_my_queries: Meine Berichte
   label_never: Nie
   label_new: Neu
+  label_new_features: Neue Funktionen
   label_new_statuses_allowed: Neuer Status
   label_news_added: Neuigkeit hinzugefügt
   label_news_comment_added: Kommentar einer Neuigkeit hinzugefügt
@@ -1960,7 +1979,6 @@ de:
     Bitte engen Sie die Suche ein, indem sie den Namen der Person (oder der Gruppe) eingeben.
   notice_unable_delete_time_entry: Der Zeiterfassungseintrag konnte nicht gelöscht
     werden.
-  notice_unable_delete_version: Die Version konnte nicht gelöscht werden.
   notice_user_missing_authentication_method: Benutzer muss noch ein Passwort oder
     eine andere Authentifizierungsmethode wählen.
   notice_user_invitation_resent: Eine Einladung wurde an %{email} gesendet.
@@ -2008,6 +2026,7 @@ de:
   permission_add_project: Projekt erstellen
   permission_add_subprojects: Unterprojekte erstellen
   permission_add_work_package_watchers: Beobachter hinzufügen
+  permission_assign_versions: Versionen zuweisen
   permission_browse_repository: Lesezugriff auf Projektarchiv (in OpenProject und
     Checkout)
   permission_change_wiki_parent_page: Übergeordnete Wiki-Seite ändern
@@ -2849,12 +2868,9 @@ de:
   menu_item: Menüpunkt
   menu_item_setting: Sichtbarkeit
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Menüpunkt für die Wikiseite "%{title}"
   wiki_menu_item_setting: Sichtbarkeit
   wiki_menu_item_new_main_item_explanation: 'Der einzige Wiki-Hauptmenüpunkt wird
@@ -2879,6 +2895,7 @@ de:
     attributes:
       lock_version: Version sperren
     errors:
+      code_400: 'Ungültige Anfrage: %{message}'
       code_401: Sie müssen sich authentifizieren, um auf die Ressource zugreifen zu
         können.
       code_401_wrong_credentials: Die von Ihnen benutzten Zugangsdaten sind nicht
@@ -2909,6 +2926,8 @@ de:
         Abschnitte.
       multiple_errors: Einschränkungen für mehrere Felder wurden verletzt.
       unable_to_create_attachment: Der Anhang konnte nicht erstellt werden
+      unable_to_create_attachment_permissions: Der Anhang konnte aufgrund fehlender
+        Dateisystemberechtigungen nicht gespeichert werden
       render:
         context_not_parsable: Der übergebene Kontext ist kein Link zu einer Ressource.
         unsupported_context: Die übergebene Ressource wird nicht als Kontext unterstützt.

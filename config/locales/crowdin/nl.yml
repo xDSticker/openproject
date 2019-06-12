@@ -113,15 +113,18 @@ nl:
     single: of
   deprecations:
     old_timeline:
-      replacement: Deze tijdlijn module is vervangen door de interactieve tijdlijn
-        die verwerkt zit in de werk pakket module.
-      removal: Deze module wordt verwijderd in OpenProject 8.0. De configuratie zal
-        niet worden gemigreerd naar de werk pakketten.
-      further_information_before: Kijkt u alstublieft naar
-      link_name: hoe te migreren naar de nieuwe tijdlijn.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Let op: deze module is wordt verwijderd in OpenProject 8.0.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -431,6 +434,7 @@ nl:
         spent_on: Datum
         type: Type
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Standaard weergegeven in roadmap
         is_default: Standaart ingesteld voor nieuwe projecten
@@ -609,6 +613,10 @@ nl:
           invalid_url: dit is geen geldige url of pad.
           must_not_be_ssh: mag geen ssh url zijn.
           no_directory: is geen map.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Werkpakket #%{id} is niet een geldig
             doel voor het opnieuw toewijzen van de tijden.'
@@ -673,7 +681,15 @@ nl:
               error_not_found: niet gevonden
         member:
           principal_blank: Kies ten minste één gebruiker of groep.
-          role_blank: Kies ten minste één rol.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Controleer de volgende velden:'
         header:
@@ -855,6 +871,7 @@ nl:
       U wordt zo spoedig mogelijk per email op de hoogte gesteld wanneer "%{target_project_name}"
       beschikbaar is.
     failed: Kan project niet kopiëren %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Gemaakte project %{target_project_name}
     errors: Fout
     project_custom_fields: Aangepaste velden in het project
@@ -1023,7 +1040,7 @@ nl:
   description_choose_project: Projecten
   description_compare_from: Vergelijk van
   description_compare_to: Vergelijk met
-  description_current_position: 'U bent hier:'
+  description_current_position: 'You are here: '
   description_date_from: Begindatum opgeven
   description_date_range_interval: Kies bereik door begin- en einddatum te selecteren
   description_date_range_list: Bereik kiezen uit lijst
@@ -1080,11 +1097,11 @@ nl:
   error_cookie_missing: De cookie voor OpenProject ontbreekt. Zorg ervoor dat cookies
     zijn ingeschakeld aangezien deze toepassing anders niet goed zal functioneren.
   error_custom_option_not_found: Optie bestaat niet.
-  error_dependent_work_package: 'Fout in afhankelijke werkpakket #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Uw account kon niet worden geactiveerd (gebruikerslimiet
     bereikt). Neem contact op met uw beheerder om toegang te krijgen.
   error_failed_to_delete_entry: Fout bij het verwijderen van deze ingave.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: De geselecteerde waarde is ongeldig.
   error_invalid_group_by: 'Kan niet groeperen op: %{value}'
   error_invalid_query_column: 'Ongeldige zoekopdracht kolom: %{value}'
@@ -1467,6 +1484,7 @@ nl:
   label_max_size: Maximale Grootte
   label_me: ik
   label_member_new: Nieuw lid
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Leden
   label_view_all_members: Alle leden bekijken
   label_menu_item_name: Naam van het menu-item
@@ -1495,6 +1513,7 @@ nl:
   label_my_queries: Mijn aangepaste query 's
   label_never: Nooit
   label_new: Nieuw
+  label_new_features: New features
   label_new_statuses_allowed: Nieuwe statussen toegestaan
   label_news_added: Nieuws toegevoegd
   label_news_comment_added: Commentaar toegevoegd aan nieuws
@@ -1935,7 +1954,6 @@ nl:
   notice_to_many_principals_to_display: Er zijn te veel resultaten. Verklein de mogelijkheden
     door een naam in te geven van een nieuw lid of groep.
   notice_unable_delete_time_entry: Niet in staat om tijdlog te verwijderen.
-  notice_unable_delete_version: Niet in staat om versie te verwijderen.
   notice_user_missing_authentication_method: Gebruiker dient nog een wachtwoord te
     kiezen of een andere manier om in te loggen te bepalen.
   notice_user_invitation_resent: Een nieuwe uitnodiging is verstuurd naar %{email}.
@@ -1983,6 +2001,7 @@ nl:
   permission_add_project: Project Aanmaken
   permission_add_subprojects: Subprojecten maken
   permission_add_work_package_watchers: Kijkers toevoegen
+  permission_assign_versions: Assign versions
   permission_browse_repository: Alleen-lezen toegang tot opslagplaats (bladeren en
     uitchecken)
   permission_change_wiki_parent_page: Bovenliggende wiki-pagina wijzigen
@@ -2815,12 +2834,9 @@ nl:
   menu_item: Menu-item
   menu_item_setting: Zichtbaarheid
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Menu-item voor wiki pagina "%{title}"
   wiki_menu_item_setting: Zichtbaarheid
   wiki_menu_item_new_main_item_explanation: 'U verwijdert het alleen het hoofd wiki
@@ -2845,6 +2861,7 @@ nl:
     attributes:
       lock_version: Vergrendel versie
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: U moet geauthenticeerd zijn om toegang te hebben tot deze resource.
       code_401_wrong_credentials: U heeft niet de juiste referenties opgeven.
       code_403: U bent niet gemachtigd om toegang te hebben tot deze resource.
@@ -2872,6 +2889,8 @@ nl:
         meerdere delen.
       multiple_errors: Meerdere veldbeperkingen werden overtreden.
       unable_to_create_attachment: De bijlage kon niet aangemaakt worden
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: De geboden context is niet een link naar een bron.
         unsupported_context: De gegeven bron wordt niet ondersteund als context.

@@ -114,15 +114,18 @@ it:
     single: oppure
   deprecations:
     old_timeline:
-      replacement: Questo modulo sulle sequenze temporali è stato sostituito dalle
-        sequenze temporali interattive integrate nei moduli delle macro-attività.
-      removal: Questo modulo verrà rimosso in OpenProject 8.0. La configurazione di
-        questa visualizzazione NON verrà migrata nella visualizzazione delle macro-attività.
-      further_information_before: Dai un'occhiata a
-      link_name: come eseguire la migrazione alle nuove sequenze temporali.
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
-      removal: 'Nota bene: questo modulo sta per essere rimosso con OpenProject 8.0.'
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -433,6 +436,7 @@ it:
         spent_on: Data
         type: Tipo
       type:
+        description: Testo predefinito per la descrizione
         attribute_groups: ''
         is_in_roadmap: Visualizzato nella tabella di marcia per impostazione predefinita
         is_default: Attivato nei nuovi progetti per impostazione predefinita
@@ -611,6 +615,10 @@ it:
           invalid_url: non è un percorso o un URL di repository valido.
           must_not_be_ssh: non deve essere un URL SSH.
           no_directory: non è una directory.
+        role:
+          permissions:
+            dependency_missing: deve includere anche '%{dependency}' in quanto è selezionato
+              '%{permission}'.
         work_package:
           is_not_a_valid_target_for_time_entries: 'La macro-attività #%{id} non può
             essere utilizzata per riassegnare la cronologia.'
@@ -646,7 +654,8 @@ it:
           attributes:
             attribute_groups:
               attribute_unknown: Attributo di macro-attività non valido utilizzato.
-              attribute_unknown_name: 'Invalid work package attribute used: %{attribute}'
+              attribute_unknown_name: 'Attributo di macro-attività non valido utilizzato:
+                %{attribute}'
               duplicate_group: Il nome di gruppo "%{group}" è usato più di una volta.
                 I nomi dei gruppi devono essere univoci.
               query_invalid: 'La query incorporata "%{group}" non è valida: %{details}'
@@ -677,7 +686,15 @@ it:
               error_not_found: non trovato
         member:
           principal_blank: Si prega di scegliere almeno un utente o un gruppo.
-          role_blank: Si prega di scegliere almeno un ruolo.
+          role_blank: deve essere assegnato.
+          attributes:
+            roles:
+              ungrantable: ha un ruolo non assegnabile.
+            principal:
+              unassignable: non può essere assegnato a un progetto.
+        version:
+          undeletable_work_packages_attached: Questa versione non può essere eliminata
+            perché vi sono macro-attività collegate a essa.
       template:
         body: 'Perfavore controlla i seguenti campi:'
         header:
@@ -859,6 +876,7 @@ it:
     started: Copia del progetto "%{source_project_name}" a "%{target_project_name}"
       iniziata. Sarete informati via mail appena "%{target_project_name}" è disponibile.
     failed: Non è possibile copiare il progetto %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Creato il progetto %{target_project_name}
     errors: Errore
     project_custom_fields: Campi personalizzati sul progetto
@@ -1027,7 +1045,7 @@ it:
   description_choose_project: Progetti
   description_compare_from: Confronta da
   description_compare_to: Confronta con
-  description_current_position: 'Sei qui:'
+  description_current_position: 'Sei qui: '
   description_date_from: Inserisci data di inizio
   description_date_range_interval: Scegli l'intervallo selezionando la data di inizio
     e fine
@@ -1085,12 +1103,12 @@ it:
   error_cookie_missing: Il cookie di OpenProject è mancante. Prego, verifica che i
     cookie siano attivati, questa applicazione non funziona correttamente senza.
   error_custom_option_not_found: L'opzione non esiste.
-  error_dependent_work_package: 'Errore nel pacchetto di lavoro dipendente #%{related_id}
-    %{related_subject}: %{error}'
   error_enterprise_activation_user_limit: Il tuo account potrebbe non essere attivo
     (raggiunto il limite utente). Si prega di contattare l'amministratore per ottenere
     l'accesso.
   error_failed_to_delete_entry: Cancellazione voce non riuscita.
+  error_in_dependent: 'Errore nel tentativo di modificare l''oggetto dipendente: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Valore selezionato non valido.
   error_invalid_group_by: 'Impossibile raggruppare per: %{value}'
   error_invalid_query_column: 'Colonna di query non valida: %{value}'
@@ -1476,6 +1494,7 @@ it:
   label_max_size: Dimensione massima
   label_me: io
   label_member_new: Nuovo membro
+  label_member_all_admin: "(Tutti i ruoli a causa dello stato di admin)"
   label_member_plural: Membri
   label_view_all_members: Visualizza tutti i membri
   label_menu_item_name: Nome della voce di menu
@@ -1504,6 +1523,7 @@ it:
   label_my_queries: Le mie query personalizzate
   label_never: Mai
   label_new: Nuovo
+  label_new_features: Nuove funzionalità
   label_new_statuses_allowed: Nuovi stati acconsentiti
   label_news_added: Notizie aggiunte
   label_news_comment_added: Commento aggiunto a una notizia
@@ -1949,7 +1969,6 @@ it:
     Affina la ricerca digitando il nome del nuovo membro (o gruppo).
   notice_unable_delete_time_entry: Impossibile eliminare la registrazione di orario
     effettuato.
-  notice_unable_delete_version: Impossibile eliminare la versione.
   notice_user_missing_authentication_method: L'utente deve ancora scegliere una password
     o un altro sistema di autenticazione.
   notice_user_invitation_resent: Un invito è stato inviato a %{email}.
@@ -1997,6 +2016,7 @@ it:
   permission_add_project: Creare un progetto
   permission_add_subprojects: Creare sotto-progetti
   permission_add_work_package_watchers: Aggiungere osservatori
+  permission_assign_versions: Assegna versioni
   permission_browse_repository: Accesso in sola lettura all'archivio (consultazione
     e check-out)
   permission_change_wiki_parent_page: Cambiare la pagina padre del wiki
@@ -2854,12 +2874,9 @@ it:
   menu_item: Voce di menu
   menu_item_setting: Visibilità
   mysql_deprecation:
-    notice: 'Le future versioni di OpenProject probabilmente ridurranno o cesseranno
-      il supporto per i database MySQL e MariaDB. La tua installazione è ancora in
-      esecuzione su MySQL e ti suggeriamo di migrare la tua installazione su PostgreSQL.
-      È un processo facile che puoi trovare seguendo le nostre guide di migrazione:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Voce di menù per la pagina wiki "%{title}"
   wiki_menu_item_setting: Visibilità
   wiki_menu_item_new_main_item_explanation: 'Stai eliminando la sola voce del menù
@@ -2884,6 +2901,7 @@ it:
     attributes:
       lock_version: Blocca Versione
     errors:
+      code_400: 'Richiesta non valida: %{message}'
       code_401: Devi essere autenticato per accedere a questa risorsa.
       code_401_wrong_credentials: Non hai fornito le credenziali corrette.
       code_403: Non sei autorizzato ad accedere a questa risorsa.
@@ -2910,6 +2928,8 @@ it:
       multipart_body_error: Il corpo della richiesta non contiene le multipart previste.
       multiple_errors: Più vincoli di campo sono stati violati.
       unable_to_create_attachment: Il tema potrebbe non essere creato
+      unable_to_create_attachment_permissions: L'allegato non può essere salvato a
+        causa della mancanza di permessi nel file system
       render:
         context_not_parsable: Il contesto fornito non è un collegamento a una risorsa.
         unsupported_context: La risorsa non è supportata come contesto.

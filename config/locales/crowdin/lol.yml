@@ -94,13 +94,16 @@ lol:
     single: crwdns122830:0crwdne122830:0
   deprecations:
     old_timeline:
-      replacement: crwdns122832:0crwdne122832:0
-      removal: crwdns122834:0crwdne122834:0
-      further_information_before: crwdns122836:0crwdne122836:0
-      link_name: crwdns122838:0crwdne122838:0
-      further_information_after: crwdns122840:0crwdne122840:0
+      replacement: This timelines module is being replaced by the interactive timeline
+        embedded into the work packages module.
+      removal: This module is going to be removed with OpenProject 8.0. The configuration
+        for this view will NOT be migrated to the work package view.
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
+      further_information_after: ''
     calendar:
-      removal: crwdns122842:0crwdne122842:0
+      removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: crwdns130024:0crwdne130024:0
   global_search:
     overwritten_tabs:
       wiki_pages: crwdns122844:0crwdne122844:0
@@ -369,6 +372,7 @@ lol:
         spent_on: crwdns123164:0crwdne123164:0
         type: crwdns123166:0crwdne123166:0
       type:
+        description: crwdns129790:0crwdne129790:0
         attribute_groups: crwdns123168:0crwdne123168:0
         is_in_roadmap: crwdns123170:0crwdne123170:0
         is_default: crwdns123172:0crwdne123172:0
@@ -535,6 +539,9 @@ lol:
           invalid_url: crwdns123420:0crwdne123420:0
           must_not_be_ssh: crwdns123422:0crwdne123422:0
           no_directory: crwdns123424:0crwdne123424:0
+        role:
+          permissions:
+            dependency_missing: crwdns129922:0%{dependency}crwdnd129922:0%{permission}crwdne129922:0
         work_package:
           is_not_a_valid_target_for_time_entries: crwdns123426:0%{id}crwdne123426:0
           attributes:
@@ -586,7 +593,14 @@ lol:
               error_not_found: crwdns123478:0crwdne123478:0
         member:
           principal_blank: crwdns123480:0crwdne123480:0
-          role_blank: crwdns123482:0crwdne123482:0
+          role_blank: crwdns129844:0crwdne129844:0
+          attributes:
+            roles:
+              ungrantable: crwdns129846:0crwdne129846:0
+            principal:
+              unassignable: crwdns129848:0crwdne129848:0
+        version:
+          undeletable_work_packages_attached: crwdns129792:0crwdne129792:0
       template:
         body: crwdns123484:0crwdne123484:0
         header:
@@ -758,6 +772,7 @@ lol:
   copy_project:
     started: crwdns123800:0%{source_project_name}crwdnd123800:0%{target_project_name}crwdnd123800:0%{target_project_name}crwdne123800:0
     failed: crwdns123802:0%{source_project_name}crwdne123802:0
+    failed_internal: crwdns129958:0crwdne129958:0
     succeeded: crwdns123804:0%{target_project_name}crwdne123804:0
     errors: crwdns123806:0crwdne123806:0
     project_custom_fields: crwdns123808:0crwdne123808:0
@@ -921,7 +936,7 @@ lol:
   description_choose_project: crwdns124046:0crwdne124046:0
   description_compare_from: crwdns124048:0crwdne124048:0
   description_compare_to: crwdns124050:0crwdne124050:0
-  description_current_position: crwdns124052:0crwdne124052:0
+  description_current_position: crwdns129850:0crwdne129850:0
   description_date_from: crwdns124054:0crwdne124054:0
   description_date_range_interval: crwdns124056:0crwdne124056:0
   description_date_range_list: crwdns124058:0crwdne124058:0
@@ -971,9 +986,9 @@ lol:
   error_code: crwdns129688:0%{code}crwdne129688:0
   error_cookie_missing: crwdns124136:0crwdne124136:0
   error_custom_option_not_found: crwdns124138:0crwdne124138:0
-  error_dependent_work_package: crwdns124140:0%{related_id}crwdnd124140:0%{related_subject}crwdnd124140:0%{error}crwdne124140:0
   error_enterprise_activation_user_limit: crwdns124142:0crwdne124142:0
   error_failed_to_delete_entry: crwdns124144:0crwdne124144:0
+  error_in_dependent: crwdns129794:0%{dependent_class}crwdnd129794:0%{related_id}crwdnd129794:0%{related_subject}crwdnd129794:0%{error}crwdne129794:0
   error_invalid_selected_value: crwdns124146:0crwdne124146:0
   error_invalid_group_by: crwdns124148:0%{value}crwdne124148:0
   error_invalid_query_column: crwdns124150:0%{value}crwdne124150:0
@@ -1332,6 +1347,7 @@ lol:
   label_max_size: crwdns124812:0crwdne124812:0
   label_me: crwdns124814:0crwdne124814:0
   label_member_new: crwdns124816:0crwdne124816:0
+  label_member_all_admin: crwdns129796:0crwdne129796:0
   label_member_plural: crwdns124818:0crwdne124818:0
   label_view_all_members: crwdns124820:0crwdne124820:0
   label_menu_item_name: crwdns124822:0crwdne124822:0
@@ -1360,6 +1376,7 @@ lol:
   label_my_queries: crwdns124868:0crwdne124868:0
   label_never: crwdns124870:0crwdne124870:0
   label_new: crwdns124872:0crwdne124872:0
+  label_new_features: crwdns129924:0crwdne129924:0
   label_new_statuses_allowed: crwdns124874:0crwdne124874:0
   label_news_added: crwdns124876:0crwdne124876:0
   label_news_comment_added: crwdns124878:0crwdne124878:0
@@ -1755,7 +1772,6 @@ lol:
   notice_successful_update: crwdns125598:0crwdne125598:0
   notice_to_many_principals_to_display: crwdns125600:0crwdne125600:0
   notice_unable_delete_time_entry: crwdns125602:0crwdne125602:0
-  notice_unable_delete_version: crwdns125604:0crwdne125604:0
   notice_user_missing_authentication_method: crwdns125606:0crwdne125606:0
   notice_user_invitation_resent: crwdns125608:0%{email}crwdne125608:0
   present_access_key_value: crwdns125610:0%{key_name}crwdnd125610:0%{value}crwdne125610:0
@@ -1797,6 +1813,7 @@ lol:
   permission_add_project: crwdns125660:0crwdne125660:0
   permission_add_subprojects: crwdns125662:0crwdne125662:0
   permission_add_work_package_watchers: crwdns125664:0crwdne125664:0
+  permission_assign_versions: crwdns129926:0crwdne129926:0
   permission_browse_repository: crwdns125666:0crwdne125666:0
   permission_change_wiki_parent_page: crwdns125668:0crwdne125668:0
   permission_comment_news: crwdns125670:0crwdne125670:0
@@ -2467,9 +2484,9 @@ lol:
   menu_item: crwdns126830:0crwdne126830:0
   menu_item_setting: crwdns126832:0crwdne126832:0
   mysql_deprecation:
-    notice: 'crwdns129700:0crwdne129700:0
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: crwdns126834:0%{title}crwdne126834:0
   wiki_menu_item_setting: crwdns126836:0crwdne126836:0
   wiki_menu_item_new_main_item_explanation: 'crwdns126838:0crwdne126838:0
@@ -2489,6 +2506,7 @@ lol:
     attributes:
       lock_version: crwdns126852:0crwdne126852:0
     errors:
+      code_400: crwdns129798:0%{message}crwdne129798:0
       code_401: crwdns126854:0crwdne126854:0
       code_401_wrong_credentials: crwdns126856:0crwdne126856:0
       code_403: crwdns126858:0crwdne126858:0
@@ -2510,6 +2528,7 @@ lol:
       multipart_body_error: crwdns126888:0crwdne126888:0
       multiple_errors: crwdns126890:0crwdne126890:0
       unable_to_create_attachment: crwdns126892:0crwdne126892:0
+      unable_to_create_attachment_permissions: crwdns129928:0crwdne129928:0
       render:
         context_not_parsable: crwdns126894:0crwdne126894:0
         unsupported_context: crwdns126896:0crwdne126896:0

@@ -122,6 +122,9 @@ th:
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: วิกิ
@@ -421,6 +424,7 @@ th:
         spent_on: วันที่
         type: ประเภท
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -593,6 +597,10 @@ th:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: is not a directory.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'ชุดภารกิจ #%{id} ไม่ใช่เป้าหมายที่ถูกต้องสำหรับการกำหนดรายการเวลา'
           attributes:
@@ -653,7 +661,15 @@ th:
               error_not_found: not found
         member:
           principal_blank: โปรดเลือกอย่างน้อยหนึ่งผู้ใช้หรือหนึ่งกลุ่ม
-          role_blank: โปรดเลือกอย่างน้อยหนึ่งบทบาท
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'กรุณาตรวจสอบฟิลด์ต่อไปนี้:'
         header:
@@ -833,6 +849,7 @@ th:
     started: Started to copy project "%{source_project_name}" to "%{target_project_name}".
       You will be informed by mail as soon as "%{target_project_name}" is available.
     failed: ไม่สามารถดำเนินการคัดลอกโครงการ %{source_project_name} ได้
+    failed_internal: Copying failed due to an internal error.
     succeeded: สร้างโครงการ %{target_project_name} แล้ว
     errors: ข้อผิดพลาด
     project_custom_fields: Custom fields on project
@@ -1000,7 +1017,7 @@ th:
   description_choose_project: โครงการ
   description_compare_from: เปรียบเทียบจาก
   description_compare_to: เปรียบเทียบ
-  description_current_position: 'คุณอยู่ที่นี่:'
+  description_current_position: 'You are here: '
   description_date_from: ระบุวันเริ่มต้น
   description_date_range_interval: เลือกช่วง โดยเลือกวันเริ่มต้นและสิ้นสุด
   description_date_range_list: เลือกช่วงจากรายการ
@@ -1053,11 +1070,11 @@ th:
   error_cookie_missing: The OpenProject cookie is missing. Please ensure that cookies
     are enabled, as this application will not properly function without.
   error_custom_option_not_found: Option does not exist.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1431,6 +1448,7 @@ th:
   label_max_size: ความยาวสูงสุด
   label_me: ฉัน
   label_member_new: สมาชิกใหม่
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: สมาชิก
   label_view_all_members: View all members
   label_menu_item_name: ชื่อของรายการเมนู
@@ -1459,6 +1477,7 @@ th:
   label_my_queries: แบบสอบถามแบบกำหนดเองของฉัน
   label_never: Never
   label_new: ใหม่
+  label_new_features: New features
   label_new_statuses_allowed: อนุญาติให้ใช้สถานะใหม่แล้ว
   label_news_added: เพิ่มข่าวแล้ว
   label_news_comment_added: เพิ่มความเห็นไปยังข่าวแล้ว
@@ -1874,7 +1893,6 @@ th:
   notice_to_many_principals_to_display: เจอผลลัพธ์มากเกินไป \n โปรดทำให้ขอบเขตการค้นหาแคบลงโดยพิมพ์ชื่อของสมาชิกใหม่
     (หรือกลุ่มใหม่) ลงไป
   notice_unable_delete_time_entry: ไม่สามารถลบรายการบันทึกเวลา
-  notice_unable_delete_version: ไม่สามารถลบเวอร์ชั่น
   notice_user_missing_authentication_method: User has yet to choose a password or
     another way to sign in.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1922,6 +1940,7 @@ th:
   permission_add_project: สร้างโครงการ
   permission_add_subprojects: สร้างโครงการย่อย
   permission_add_work_package_watchers: เพิ่มผู้เฝ้าดู
+  permission_assign_versions: Assign versions
   permission_browse_repository: Read-only access to repository (browse and checkout)
   permission_change_wiki_parent_page: เปลี่ยนแปลงหลักหน้าวิกิ
   permission_comment_news: แสดงความคิดเห็นเกี่ยวกับข่าว
@@ -2702,12 +2721,9 @@ th:
   menu_item: เมนู
   menu_item_setting: การมองเห็น
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: เมนูสำหรับหน้าวิกิ "%{title}"
   wiki_menu_item_setting: การมองเห็น
   wiki_menu_item_new_main_item_explanation: 'คุณกำลังลบเฉพาะเมนูของวิกิหลัก ตอนนี้คุณต้องเลือกหน้าวิกิที่ไอเทมหลักจะถูกสร้าง
@@ -2729,6 +2745,7 @@ th:
     attributes:
       lock_version: Lock Version
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: You need to be authenticated to access this resource.
       code_401_wrong_credentials: You did not provide the correct credentials.
       code_403: You are not authorized to access this resource.
@@ -2756,6 +2773,8 @@ th:
         parts.
       multiple_errors: Multiple field constraints have been violated.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: The context provided is not a link to a resource.
         unsupported_context: The resource given is not supported as context.

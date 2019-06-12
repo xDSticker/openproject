@@ -117,11 +117,14 @@ hi:
         embedded into the work packages module.
       removal: This module is going to be removed with OpenProject 8.0. The configuration
         for this view will NOT be migrated to the work package view.
-      further_information_before: कृपया इस पर एक नजर डालें
-      link_name: नई समयरेखा पर migrate कैसे करें
+      further_information_before: Please take a look at
+      link_name: how to migrate to the new timeline.
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: विकी
@@ -428,6 +431,7 @@ hi:
         spent_on: तिथि
         type: प्रकार
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: डिफ़ॉल्ट रूप से रोडमैप में प्रदर्शित
         is_default: डिफ़ॉल्ट रूप से नए प्रोजेक्ट्स के लिए सक्रिय
@@ -603,6 +607,10 @@ hi:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: is not a directory.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Work package #%{id} is not a valid
             target for reassigning the time entries.'
@@ -666,7 +674,15 @@ hi:
               error_not_found: not found
         member:
           principal_blank: कृपया कम से कम एक समूह या उपयोगकर्ता चुनें।
-          role_blank: कृपया कम से कम एक भूमिका टेबल चुनें
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'कृपया निंनलिखित क्षेत्रों की जांच करें:'
         header:
@@ -846,6 +862,7 @@ hi:
     started: Started to copy project "%{source_project_name}" to "%{target_project_name}".
       You will be informed by mail as soon as "%{target_project_name}" is available.
     failed: प्रोजेक्ट की प्रतिलिपि बनाना सम्भव नहीं %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: प्रोजेक्ट बनाया %{target_project_name}
     errors: त्रुटि
     project_custom_fields: Custom fields on project
@@ -1014,7 +1031,7 @@ hi:
   description_choose_project: Projects
   description_compare_from: Compare from
   description_compare_to: Compare to
-  description_current_position: 'You are here:'
+  description_current_position: 'You are here: '
   description_date_from: Enter start date
   description_date_range_interval: Choose range by selecting start and end date
   description_date_range_list: Choose range from list
@@ -1067,11 +1084,11 @@ hi:
   error_cookie_missing: The OpenProject cookie is missing. Please ensure that cookies
     are enabled, as this application will not properly function without.
   error_custom_option_not_found: Option does not exist.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: अमांय चयनित मान ।
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1453,6 +1470,7 @@ hi:
   label_max_size: Maximum size
   label_me: me
   label_member_new: New member
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: सदस्य
   label_view_all_members: सभी सदस्य देखें
   label_menu_item_name: Name of menu item
@@ -1481,6 +1499,7 @@ hi:
   label_my_queries: My custom queries
   label_never: Never
   label_new: नया
+  label_new_features: New features
   label_new_statuses_allowed: New statuses allowed
   label_news_added: News added
   label_news_comment_added: Comment added to a news
@@ -1911,7 +1930,6 @@ hi:
     There are too many results.
     Narrow down the search by typing in the name of the new member (or group).
   notice_unable_delete_time_entry: Unable to delete time log entry.
-  notice_unable_delete_version: Unable to delete version.
   notice_user_missing_authentication_method: User has yet to choose a password or
     another way to sign in.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1959,6 +1977,7 @@ hi:
   permission_add_project: Create project
   permission_add_subprojects: Create subprojects
   permission_add_work_package_watchers: Add watchers
+  permission_assign_versions: Assign versions
   permission_browse_repository: Read-only access to repository (browse and checkout)
   permission_change_wiki_parent_page: Change parent wiki page
   permission_comment_news: Comment news
@@ -2766,12 +2785,9 @@ hi:
   menu_item: Menu item
   menu_item_setting: Visibility
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Menu item for wikipage "%{title}"
   wiki_menu_item_setting: Visibility
   wiki_menu_item_new_main_item_explanation: 'You are deleting the only main wiki menu
@@ -2795,6 +2811,7 @@ hi:
     attributes:
       lock_version: Lock Version
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: You need to be authenticated to access this resource.
       code_401_wrong_credentials: You did not provide the correct credentials.
       code_403: You are not authorized to access this resource.
@@ -2822,6 +2839,8 @@ hi:
         parts.
       multiple_errors: Multiple field constraints have been violated.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: The context provided is not a link to a resource.
         unsupported_context: The resource given is not supported as context.

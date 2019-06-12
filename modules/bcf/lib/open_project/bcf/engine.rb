@@ -18,7 +18,7 @@ module OpenProject::Bcf
                    'bcf/issues': :index
 
         permission :manage_bcf,
-                   'bcf/issues': %i[index import prepare_import perform_import]
+                   'bcf/issues': %i[index upload prepare_import configure_import perform_import]
       end
 
       menu :project_menu,
@@ -59,6 +59,15 @@ module OpenProject::Bcf
       require_relative 'patches/api/v3/export_formats'
 
       prepend Patches::Api::V3::ExportFormats
+    end
+
+    add_api_path :bcf_xml do |project_id|
+      "#{project(project_id)}/bcf_xml"
+    end
+
+    add_api_endpoint 'API::V3::Projects::ProjectsAPI' do
+      content_type :binary, 'application/octet-stream'
+      mount ::API::V3::BcfXml::BcfXmlAPI
     end
 
     initializer 'bcf.register_hooks' do

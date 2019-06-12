@@ -26,61 +26,41 @@
 // See doc/COPYRIGHT.rdoc for more details.
 //++
 
-import {
-  ChangeDetectorRef,
-  Directive,
-  ElementRef,
-  EventEmitter,
-  Injector,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output
-} from '@angular/core';
+import {ChangeDetectorRef, Directive, ElementRef, Injector} from '@angular/core';
 import {I18nService} from 'core-app/modules/common/i18n/i18n.service';
 import {AuthorisationService} from 'core-app/modules/common/model-auth/model-auth.service';
 import {OpContextMenuTrigger} from 'core-components/op-context-menu/handlers/op-context-menu-trigger.directive';
 import {OPContextMenuService} from 'core-components/op-context-menu/op-context-menu.service';
-import {States} from 'core-components/states.service';
-import {WorkPackagesListService} from 'core-components/wp-list/wp-list.service';
-import {componentDestroyed} from 'ng2-rx-componentdestroyed';
-import {takeUntil} from 'rxjs/operators';
-import {QueryFormResource} from 'core-app/modules/hal/resources/query-form-resource';
-import {QueryResource} from 'core-app/modules/hal/resources/query-resource';
 import {OpModalService} from "core-components/op-modals/op-modal.service";
-import {WpTableExportModal} from "core-components/modals/export-modal/wp-table-export.modal";
-import {SaveQueryModal} from "core-components/modals/save-modal/save-query.modal";
-import {QuerySharingModal} from "core-components/modals/share-modal/query-sharing.modal";
-import {WpTableConfigurationModalComponent} from 'core-components/wp-table/configuration-modal/wp-table-configuration.modal';
 import {IsolatedQuerySpace} from "core-app/modules/work_packages/query-space/isolated-query-space";
-import {
-  selectableTitleIdentifier,
-  triggerEditingEvent
-} from "core-app/modules/common/editable-toolbar-title/editable-toolbar-title.component";
-import {WorkPackageInlineCreateService} from "core-components/wp-inline-create/wp-inline-create.service";
 import {BoardListComponent} from "core-app/modules/boards/board/board-list/board-list.component";
+import {Board} from "core-app/modules/boards/board/board";
+import {BoardActionsRegistryService} from "core-app/modules/boards/board/board-actions/board-actions-registry.service";
+import {OpContextMenuItem} from "core-components/op-context-menu/op-context-menu.types";
 
 @Directive({
   selector: '[boardListDropdown]'
 })
 export class BoardListDropdownMenuDirective extends OpContextMenuTrigger {
+  private board:Board;
 
   constructor(readonly elementRef:ElementRef,
               readonly opContextMenu:OPContextMenuService,
               readonly opModalService:OpModalService,
               readonly authorisationService:AuthorisationService,
-              readonly wpInlineCreate:WorkPackageInlineCreateService,
               readonly boardList:BoardListComponent,
               readonly injector:Injector,
               readonly querySpace:IsolatedQuerySpace,
               readonly cdRef:ChangeDetectorRef,
-              readonly I18n:I18nService) {
+              readonly I18n:I18nService,
+              readonly boardActions:BoardActionsRegistryService) {
 
     super(elementRef, opContextMenu);
+    this.board = this.boardList.board;
   }
 
-  protected open(evt:JQueryEventObject) {
-    this.items = this.buildItems();
+  protected async open(evt:JQueryEventObject) {
+    this.items = await this.buildItems();
     this.opContextMenu.show(this, evt);
   }
 
@@ -101,8 +81,8 @@ export class BoardListDropdownMenuDirective extends OpContextMenuTrigger {
     return position;
   }
 
-  private buildItems() {
-    return [
+  private async buildItems() {
+    let items:OpContextMenuItem[] = [
       {
         disabled: !this.boardList.canDelete,
         linkText: this.I18n.t('js.boards.lists.delete'),
@@ -112,5 +92,16 @@ export class BoardListDropdownMenuDirective extends OpContextMenuTrigger {
         }
       }
     ];
+
+    // Add action specific menu entries
+    if (this.board.isAction) {
+      const actionService = this.boardActions.get(this.board.actionAttribute!);
+      const query = this.querySpace.query.value!;
+
+      const additional = await actionService.getAdditionalListMenuItems(query);
+      return items.concat(additional);
+    }
+
+    return items;
   }
 }

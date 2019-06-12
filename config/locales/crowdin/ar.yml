@@ -122,6 +122,9 @@ ar:
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -424,6 +427,7 @@ ar:
         spent_on: التاريخ
         type: النّوع
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -595,6 +599,10 @@ ar:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: ليس من دليل.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'مجموعة العمل #%{id} ليست هدفًا
             صالحًا لإعادة تعيين إدخالات الوقت.'
@@ -660,7 +668,15 @@ ar:
               error_not_found: لم يتم العثور
         member:
           principal_blank: يرجى اختيار مستخدم واحد على الأقل أو مجموعة.
-          role_blank: من فضلك قم باختيار دور واحد على الأقل.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'من فضلك تحقّقْ من الحقول التالية:'
         header:
@@ -850,6 +866,7 @@ ar:
     started: بدأ بنسخ المشروع "%{source_project_name}" إلى "%{target_project_name}".
       سيتم إبلاغك بالبريد الإلكتروني حالما يتوفر "%{target_project_name}".
     failed: لا يمكن نسخ المشروع %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: المشروع الذي تم إنشاؤه %{target_project_name}
     errors: خطأ
     project_custom_fields: Custom fields on project
@@ -1070,7 +1087,7 @@ ar:
   description_choose_project: المشاريع
   description_compare_from: مقارنة من
   description_compare_to: مقارنة مع
-  description_current_position: 'أنت هنا:'
+  description_current_position: 'You are here: '
   description_date_from: ادخل تاريخ البدء
   description_date_range_interval: اختر النطاق عن طريق تحديد تاريخ البدء والانتهاء
   description_date_range_list: اختر نطاقا من القائمة
@@ -1124,11 +1141,11 @@ ar:
     من أن يتم تمكين ملفات تعريف الارتباط "كوكيز"، لأن هذا التطبيق لن يعمل بشكل صحيح
     دون ذلك.
   error_custom_option_not_found: Option does not exist.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1508,6 +1525,7 @@ ar:
   label_max_size: الحجم الأقصى
   label_me: لي
   label_member_new: عضو جديد
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: أعضاء
   label_view_all_members: عرض جميع الأعضاء
   label_menu_item_name: اسم عنصر من القائمة
@@ -1536,6 +1554,7 @@ ar:
   label_my_queries: استعلاماتي المخصصة
   label_never: أبداً
   label_new: جديد
+  label_new_features: New features
   label_new_statuses_allowed: الحالات الجديدة المسموح بها
   label_news_added: تم إضافة أحداث
   label_news_comment_added: تم إضافة تعليق إلى أحداث
@@ -1977,7 +1996,6 @@ ar:
   notice_to_many_principals_to_display: هناك الكثير من النتائج. تضييق البحث عن طريق
     كتابة اسم العضو الجديد (أو المجموعة).
   notice_unable_delete_time_entry: غير قادر على حذف إدخال سجل الوقت.
-  notice_unable_delete_version: غير قادر على حذف الإصدار.
   notice_user_missing_authentication_method: على المستخدم اختيار كلمة مرور أو طريقة
     أخرى لتسجيل الدخول.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -2029,6 +2047,7 @@ ar:
   permission_add_project: إنشاء مشروع
   permission_add_subprojects: إنشاء مشاريع فرعية
   permission_add_work_package_watchers: إضافة مراقب
+  permission_assign_versions: Assign versions
   permission_browse_repository: وصول للقراءة فقط إلى مستودع (استعراض والخروج)
   permission_change_wiki_parent_page: تغيير صفحة wikiالاصلية
   permission_comment_news: أخبار التعليق
@@ -2829,12 +2848,9 @@ ar:
   menu_item: عناصر القائمة
   menu_item_setting: الظهور
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: عنصر القائمة "%{title}"
   wiki_menu_item_setting: الظهور
   wiki_menu_item_new_main_item_explanation: 'يتم حذف عنصر القائمة Wiki الرئيسي فقط.
@@ -2857,6 +2873,7 @@ ar:
     attributes:
       lock_version: قفل الإصدار
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: تحتاج إلى مصادقة الوصول إلى هذا المورد.
       code_401_wrong_credentials: لم تقدم بيانات الاعتماد الصحيحة.
       code_403: غير مسموح لك بدخول هذا المورد.
@@ -2882,6 +2899,8 @@ ar:
       multipart_body_error: لم يتضمن نص الطلب على أجزاء متعددة الأجزاء المتوقعة.
       multiple_errors: تم انتهاك قيود متعددة الحقول.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: سياق المقدمة ليس ارتباط إلى مورد.
         unsupported_context: غير معتمد المورد نظراً للسياق.

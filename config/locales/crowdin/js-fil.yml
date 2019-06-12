@@ -18,12 +18,6 @@ fil:
     close_popup_title: Isara ang popup
     close_filter_title: Isara ang filter
     close_form_title: Isara ang form
-    boards:
-      upsale:
-        boards: Need to freely structure your work in a board view?
-        check_out_link: Suriin ang Enterprise Edition.
-      lists:
-        delete: Delete list
     card:
       add_new: Add new card
       highlighting:
@@ -72,7 +66,7 @@ fil:
       too_many: There are more work packages (%{count}) than can be displayed by the
         calendar (%{max}). Add filters to focus on the relevant ones.
     description_available_columns: Ang mga hanay na magagamit
-    description_current_position: 'Nandito ka na:'
+    description_current_position: 'You are here: '
     description_select_work_package: 'Piliin ang work package #%{id}'
     description_selected_columns: Napiling mga hanay
     description_subwork_package: 'Bata ng work package #%{id}'
@@ -185,6 +179,17 @@ fil:
           title: Ang mga work package
         work_packages_calendar:
           title: Kalendaryo
+    homescreen:
+      blocks:
+        new_features:
+          text_new_features: Read about new features and product updates.
+          current_new_feature_html: 'OpenProject contains a new <b>Boards view</b>
+            for Agile project management. </br> To activate this new feature for your
+            existing projects, please do the following steps: <ul><li>Activate the
+            module Boards within existing projects'' settings.</li> <li>Configure
+            your Boards in a project.</li> <li>Verify roles and permissions</li></ul>'
+          image_alt_text: Board teaser image
+          learn_about: Learn more about Agile Boards
     label_activate: Aktibo
     label_activity_no: Bilang ng aktibidad entry %{activityNo}
     label_activity_with_comment_no: Bilang ng aktibidad entry %{activityNo}. Mayroong
@@ -210,6 +215,7 @@ fil:
     label_board_locked: Naka-lock
     label_board_plural: Boards
     label_board_sticky: Malagkit
+    label_create: Lumikha
     label_create_work_package: Lumikha ng bagong work package
     label_created_by: Nilikha ni
     label_date: Petsa
@@ -414,9 +420,11 @@ fil:
       relation_description: Pindutin upang magdagdag ng deskripsyon sa kaugnay na
         ito
     project:
-      required_outside_context: Wala ka sa loob ng kontesktong proyekto. Mangyaring
-        pumili ng kontekstong proyekto sa unang pagkasunod-sunod upang piliin ang
-        uri at estado
+      required_outside_context: 'Please choose a project to create the work package
+        in to see all attributes. You can only select projects which have the type
+        above activated.
+
+'
       context: Kontekstong proyekto
       work_package_belongs_to: Itong work packge ay nabibilang sa proyekto %{projectname}.
       click_to_switch_context: Buksan ang work package sa proyekto na iyan.
@@ -506,8 +514,8 @@ fil:
       save: I-save ang pakipag-ugnayan
       abort: Huwag ituloy
     relations_autocomplete:
-      placeholder: Ipasok ang Id ng kauganay sa work package
-      parent_placeholder: Choose new parent, press enter to unset, escape to cancel.
+      placeholder: Type to search
+      parent_placeholder: Choose new parent or press escape to cancel.
     repositories:
       select_tag: Pumiling ng tag
       select_branch: Pumili ng sangay

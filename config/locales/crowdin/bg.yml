@@ -122,6 +122,9 @@ bg:
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -427,6 +430,7 @@ bg:
         spent_on: Дата
         type: Тип
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -599,6 +603,10 @@ bg:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: не е директория.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Работен пакет #%{id} не е валидна
             цел за преразпределяне на времевите записи.'
@@ -662,7 +670,15 @@ bg:
               error_not_found: not found
         member:
           principal_blank: Моля изберете поне един потребител или група.
-          role_blank: Моля, изберете поне една роля.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Моля проверете следните полета:'
         header:
@@ -842,6 +858,7 @@ bg:
       Ще бъдете информирани по пощата веднага, след като "%{target_project_name}"
       е достъпен.
     failed: Не може да се копира проект %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Създаден проект %{target_project_name}
     errors: Грешка
     project_custom_fields: Custom fields on project
@@ -1008,7 +1025,7 @@ bg:
   description_choose_project: Проекти
   description_compare_from: Compare from
   description_compare_to: Compare to
-  description_current_position: 'Вие сте тук:'
+  description_current_position: 'You are here: '
   description_date_from: Въведете начална дата
   description_date_range_interval: Изберете периода, чрез избиране на начална и крайна
     дата
@@ -1062,11 +1079,11 @@ bg:
   error_cookie_missing: '"Бисквитката" на OpenProject липсва. Моля уверете се че cookies
     са активирани, тъй като това приложение не функционира правилно без тях.'
   error_custom_option_not_found: Option does not exist.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1451,6 +1468,7 @@ bg:
   label_max_size: Максимален размер
   label_me: мен
   label_member_new: Нов потребител
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Потребители
   label_view_all_members: Покажи всички членове
   label_menu_item_name: Име на елемент от меню
@@ -1479,6 +1497,7 @@ bg:
   label_my_queries: Моите потребителски заявки
   label_never: Никога
   label_new: Нов
+  label_new_features: New features
   label_new_statuses_allowed: Новите статуси за разрешени
   label_news_added: Добавени новини
   label_news_comment_added: Коментар, добавен към новини
@@ -1912,7 +1931,6 @@ bg:
   notice_to_many_principals_to_display: Има твърде много резултати. Стесните търсенето,
     като въведете името на нов член (или група).
   notice_unable_delete_time_entry: Не може да изтриете запис в регистъра на време.
-  notice_unable_delete_version: Не може да изтриете версия.
   notice_user_missing_authentication_method: Потребителят все още не е избрал парола
     или друг начин за влизане.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1960,6 +1978,7 @@ bg:
   permission_add_project: Създаване на проект
   permission_add_subprojects: Create subprojects
   permission_add_work_package_watchers: Добавяне на наблюдатели
+  permission_assign_versions: Assign versions
   permission_browse_repository: Read-only access to repository (browse and checkout)
   permission_change_wiki_parent_page: Change parent wiki page
   permission_comment_news: Comment news
@@ -2763,12 +2782,9 @@ bg:
   menu_item: Menu item
   menu_item_setting: Видимост
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Menu item for wikipage "%{title}"
   wiki_menu_item_setting: Видимост
   wiki_menu_item_new_main_item_explanation: 'You are deleting the only main wiki menu
@@ -2792,6 +2808,7 @@ bg:
     attributes:
       lock_version: Lock Version
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: You need to be authenticated to access this resource.
       code_401_wrong_credentials: You did not provide the correct credentials.
       code_403: You are not authorized to access this resource.
@@ -2819,6 +2836,8 @@ bg:
         parts.
       multiple_errors: Multiple field constraints have been violated.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: The context provided is not a link to a resource.
         unsupported_context: The resource given is not supported as context.

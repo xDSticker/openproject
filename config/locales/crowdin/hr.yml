@@ -120,6 +120,9 @@ hr:
       further_information_after: ''
     calendar:
       removal: 'Please note: This module is going to be removed with OpenProject 8.0.'
+    time_entries: This time entries view is superseded by the 'Cost reports' module.
+      This view now only supports exporting time entry information to csv. For interactive
+      filtering, please activate the 'Cost reports' module in the project settings.
   global_search:
     overwritten_tabs:
       wiki_pages: Wiki
@@ -427,6 +430,7 @@ hr:
         spent_on: Datum
         type: Tip
       type:
+        description: Default text for description
         attribute_groups: ''
         is_in_roadmap: Displayed in roadmap by default
         is_default: Activated for new projects by default
@@ -600,6 +604,10 @@ hr:
           invalid_url: is not a valid repository URL or path.
           must_not_be_ssh: must not be an SSH url.
           no_directory: nije direktorij.
+        role:
+          permissions:
+            dependency_missing: need to also include '%{dependency}' as '%{permission}'
+              is selected.
         work_package:
           is_not_a_valid_target_for_time_entries: 'Radni paket #%{id} nije nadređen
             za ponovno dodjeljivanje vremena.'
@@ -665,7 +673,15 @@ hr:
               error_not_found: nije pronađeno
         member:
           principal_blank: Molim vas odaberite najamnje jednog korisnika ili grupu.
-          role_blank: Molim vas odaberite najmanje jednu rolu.
+          role_blank: need to be assigned.
+          attributes:
+            roles:
+              ungrantable: has an unassignable role.
+            principal:
+              unassignable: cannot be assigned to a project.
+        version:
+          undeletable_work_packages_attached: The version cannot be deleted as it
+            has work packages attached to it.
       template:
         body: 'Molim vas provjerite sljedeća polja:'
         header:
@@ -847,6 +863,7 @@ hr:
     started: Started to copy project "%{source_project_name}" to "%{target_project_name}".
       You will be informed by mail as soon as "%{target_project_name}" is available.
     failed: Nije moguće kopirati projekt %{source_project_name}
+    failed_internal: Copying failed due to an internal error.
     succeeded: Dodan je projekt %{target_project_name}
     errors: Greška
     project_custom_fields: Prilagođena polja na projektu
@@ -1025,7 +1042,7 @@ hr:
   description_choose_project: Projekti
   description_compare_from: Compare from
   description_compare_to: Compare to
-  description_current_position: 'Nalazite se ovdje:'
+  description_current_position: 'You are here: '
   description_date_from: Unesite datum početka
   description_date_range_interval: Odaberite raspon tako da odaberete datum početka
     i završetka
@@ -1079,11 +1096,11 @@ hr:
   error_cookie_missing: The OpenProject cookie is missing. Please ensure that cookies
     are enabled, as this application will not properly function without.
   error_custom_option_not_found: Opcija ne postoji.
-  error_dependent_work_package: 'Error in dependent work package #%{related_id} %{related_subject}:
-    %{error}'
   error_enterprise_activation_user_limit: Your account could not be activated (user
     limit reached). Please contact your administrator to gain access.
   error_failed_to_delete_entry: Failed to delete this entry.
+  error_in_dependent: 'Error attempting to alter dependent object: %{dependent_class}
+    #%{related_id} - %{related_subject}: %{error}'
   error_invalid_selected_value: Invalid selected value.
   error_invalid_group_by: 'Can''t group by: %{value}'
   error_invalid_query_column: 'Invalid query column: %{value}'
@@ -1466,6 +1483,7 @@ hr:
   label_max_size: Maksimalna veličina
   label_me: ja
   label_member_new: Novi član
+  label_member_all_admin: "(All roles due to admin status)"
   label_member_plural: Članovi
   label_view_all_members: Pogledaj sve članove
   label_menu_item_name: Naziv stavke izbornika
@@ -1494,6 +1512,7 @@ hr:
   label_my_queries: Moji prilagođeni upiti
   label_never: Nikad
   label_new: Novi
+  label_new_features: New features
   label_new_statuses_allowed: Novi statusi dopušteni
   label_news_added: Vijest dodana
   label_news_comment_added: Komentar dodan vijesti
@@ -1939,7 +1958,6 @@ hr:
     Prikazano je previše rezultata.
     Sužite rezultate pretrage na način da unesete ime novog člana (ili grupe).
   notice_unable_delete_time_entry: Nije moguće brisanje evidentiranih zapisa o vremenu.
-  notice_unable_delete_version: Nije moguće izbrisati verziju.
   notice_user_missing_authentication_method: Korisnik mora odabrati lozinku ili drugi
     način prijave.
   notice_user_invitation_resent: An invitation has been sent to %{email}.
@@ -1988,6 +2006,7 @@ hr:
   permission_add_project: Stvori projekt
   permission_add_subprojects: Kreiraj potprojekte
   permission_add_work_package_watchers: Dodaj nadglednike
+  permission_assign_versions: Assign versions
   permission_browse_repository: Read-only pristup repozitoriju (pregledavanje i provjera)
   permission_change_wiki_parent_page: Promijeni nadređenu wiki stranicu
   permission_comment_news: Komentirajte vijest
@@ -2799,12 +2818,9 @@ hr:
   menu_item: Stavka izbornika
   menu_item_setting: Vidljivost
   mysql_deprecation:
-    notice: 'Future versions of OpenProject will likely drop or reduce support for
-      MySQL and MariaDB databases. Your installation is still running on MySQL and
-      we suggest you migrate your installation to PostgreSQL. This process is easy
-      when following our migration guides:
-
-'
+    notice: |
+      Future versions of OpenProject will likely drop or reduce support for MySQL and MariaDB databases. Your installation is still running on MySQL and we suggest you migrate your installation to PostgreSQL.
+      This process is easy when following our migration guides:
   wiki_menu_item_for: Stavka izbornika za wiki stranicu "%{title}"
   wiki_menu_item_setting: Vidljivost
   wiki_menu_item_new_main_item_explanation: 'Izbrisati će te samo glavnu stavku wiki
@@ -2829,6 +2845,7 @@ hr:
     attributes:
       lock_version: Zaključavanje verzije
     errors:
+      code_400: 'Bad request: %{message}'
       code_401: Morate biti autorizirani za pristup ovom resursu.
       code_401_wrong_credentials: Niste naveli ispravnu akreditaciju.
       code_403: Niste autorizirani za pristup ovom resursu.
@@ -2855,6 +2872,8 @@ hr:
         parts.
       multiple_errors: Multiple field constraints have been violated.
       unable_to_create_attachment: The attachment could not be created
+      unable_to_create_attachment_permissions: The attachment could not be saved due
+        to lacking file system permissions
       render:
         context_not_parsable: Predviđena dopuna nije poveznica na resurs.
         unsupported_context: Dani resurs nije podržan u obliku konteksta.

@@ -31,6 +31,11 @@ import {Injectable} from '@angular/core';
 import {PathHelperService} from 'core-app/modules/common/path-helper/path-helper.service';
 import {VersionResource} from "core-app/modules/hal/resources/version-resource";
 import {CollectionResource} from "core-app/modules/hal/resources/collection-resource";
+import {HalResource} from "core-app/modules/hal/resources/hal-resource";
+import {ProjectResource} from "core-app/modules/hal/resources/project-resource";
+import {GridResource} from "core-app/modules/hal/resources/grid-resource";
+import {SchemaResource} from "core-app/modules/hal/resources/schema-resource";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class VersionDmService {
@@ -38,7 +43,20 @@ export class VersionDmService {
               protected pathHelper:PathHelperService) {
   }
 
-  public one(id:number):Promise<VersionResource> {
+  public createVersion(payload:any):Promise<VersionResource> {
+    return this.halResourceService
+      .post<VersionResource>(this.pathHelper.api.v3.versions.path, payload)
+      .toPromise();
+  }
+
+  public emptyCreateForm(payload:any):Promise<HalResource> {
+    return this.halResourceService
+      .post<VersionResource>(this.pathHelper.api.v3.versions.form.toString(), payload)
+      .toPromise();
+  }
+
+
+  public one(id:string|number):Promise<VersionResource> {
     return this.halResourceService
       .get<VersionResource>(this.pathHelper.api.v3.versions.id(id).toString())
       .toPromise();
@@ -56,5 +74,17 @@ export class VersionDmService {
       .toPromise();
   }
 
+  public listProjectsAvailableForVersions():Promise<CollectionResource<ProjectResource>> {
+    return this.halResourceService
+      .get<CollectionResource<ProjectResource>>(this.pathHelper.api.v3.versions.availableProjects.toString())
+      .toPromise();
+  }
 
+  public patch(resource:VersionResource, payload:Object):Promise<VersionResource> {
+    return this.halResourceService
+      .patch<VersionResource>(
+        this.pathHelper.api.v3.versions.id(resource.id!).toString(),
+        payload)
+      .toPromise();
+  }
 }
